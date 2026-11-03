@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倪柝聲 (Watchman Nee) - 一頁式紀念網站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .font-serif-tc {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* 數字時鐘與桌布背景樣式 */
+        .wallpaper-hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        /* 齒輪設定面板動畫 */
+        .settings-panel {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateX(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .settings-panel.active {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 文字陰影增強可讀性 */
+        .text-shadow-lg {
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- 頂部導覽列 -->
+    <nav class="sticky top-0 z-40 bg-stone-900/90 backdrop-blur-md text-stone-100 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="font-serif-tc text-xl font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">
+                倪柝聲紀念網頁
+            </a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#hero" class="hover:text-amber-400 transition">時鐘桌布</a>
+                <a href="#intro" class="hover:text-amber-400 transition">生平概述</a>
+                <a href="#section1" class="hover:text-amber-400 transition">名字由來</a>
+                <a href="#section2" class="hover:text-amber-400 transition">召會運動</a>
+                <a href="#section3" class="hover:text-amber-400 transition">代表著作</a>
+                <a href="#section4" class="hover:text-amber-400 transition">最後遺言</a>
+                <a href="#contact" class="hover:text-amber-400 transition bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-md">進一步認識</a>
+            </div>
+            <!-- 行動裝置選單按鈕 -->
+            <button id="mobileMenuBtn" class="md:hidden text-stone-300 hover:text-white focus:outline-none" aria-label="選單">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- 行動裝置下拉選單 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-stone-800 px-4 pt-2 pb-4 space-y-2 border-t border-stone-700">
+            <a href="#hero" class="block py-2 text-stone-300 hover:text-amber-400">時鐘桌布</a>
+            <a href="#intro" class="block py-2 text-stone-300 hover:text-amber-400">生平概述</a>
+            <a href="#section1" class="block py-2 text-stone-300 hover:text-amber-400">名字由來</a>
+            <a href="#section2" class="block py-2 text-stone-300 hover:text-amber-400">召會運動</a>
+            <a href="#section3" class="block py-2 text-stone-300 hover:text-amber-400">代表著作</a>
+            <a href="#section4" class="block py-2 text-stone-300 hover:text-amber-400">最後遺言</a>
+            <a href="#contact" class="block py-2 text-amber-400 font-semibold">進一步認識</a>
+        </div>
+    </nav>
+
+    <!-- 桌布與簡潔數字時鐘區塊 -->
+    <section id="hero" class="relative w-full h-[60vh] min-h-[400px] flex items-center justify-center wallpaper-hero text-white overflow-hidden">
+        
+        <!-- 中央數字時鐘與日期 -->
+        <div class="text-center z-10 px-4">
+            <div id="clockTime" class="font-serif-tc text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-shadow-lg mb-2">
+                00:00:00
+            </div>
+            <div id="clockDate" class="text-base sm:text-xl md:text-2xl font-light tracking-widest text-stone-200 text-shadow-lg">
+                2026年11月3日 星期二
+            </div>
+        </div>
+
+        <!-- 右上方齒輪按鈕 -->
+        <button id="gearBtn" class="absolute top-6 right-6 z-20 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition shadow-lg focus:outline-none" aria-label="設定桌布">
+            <svg class="w-6 h-6 transform hover:rotate-90 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+        </button>
+
+        <!-- 齒輪設定彈出面板 -->
+        <div id="settingsPanel" class="settings-panel absolute top-20 right-6 z-30 w-80 bg-stone-900/95 text-stone-100 p-6 rounded-2xl shadow-2xl backdrop-blur-md border border-stone-700">
+            <h3 class="text-lg font-semibold mb-4 border-b border-stone-700 pb-2 flex items-center justify-between">
+                <span>桌布設定</span>
+                <span class="text-xs text-stone-400">背景自訂</span>
+            </h3>
+
+            <!-- 選項 1: 選擇內建預設桌布 -->
+            <div class="mb-4">
+                <label class="block text-xs text-stone-300 mb-1">選擇內建桌布</label>
+                <select id="presetWallpaper" class="w-full bg-stone-800 border border-stone-600 rounded-lg px-3 py-2 text-sm text-stone-200 focus:outline-none focus:border-amber-500">
+                    <option value="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80">寂靜海岸</option>
+                    <option value="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1920&q=80">晨曦森林</option>
+                    <option value="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80">星空夜山</option>
+                    <option value="https://images.unsplash.com/photo-1499209974431-9dac3cea0047?auto=format&fit=crop&w=1920&q=80">寧靜光芒</option>
+                </select>
+            </div>
+
+            <!-- 選項 2: 輸入 CSV 發佈網址 -->
+            <div class="mb-2">
+                <label class="block text-xs text-stone-300 mb-1">載入 CSV 桌布網址</label>
+                <input type="text" id="csvUrlInput" placeholder="請貼上 CSV 發佈網址" class="w-full bg-stone-800 border border-stone-600 rounded-lg px-3 py-2 text-sm text-stone-200 focus:outline-none focus:border-amber-500">
+            </div>
+            <button id="loadCsvBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-medium py-2 rounded-lg text-sm transition mt-2">
+                載入 CSV 桌布
+            </button>
+        </div>
+    </section>
+
+    <!-- 主要內容區 -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- 簡介區塊 -->
+        <section id="intro" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
+            <h1 class="font-serif-tc text-3xl sm:text-4xl font-bold text-stone-900 border-b-2 border-amber-600/60 pb-4 mb-6">
+                倪柝聲 <span class="text-xl sm:text-2xl font-normal text-stone-600 block sm:inline mt-1 sm:mt-0">(Watchman Nee)</span>
+            </h1>
+            <p class="text-sm font-semibold text-amber-800 bg-amber-50 inline-block px-3 py-1 rounded-full mb-6">
+                1903年11月4日 － 1972年5月30日
+            </p>
+            <div class="text-stone-700 leading-relaxed text-base sm:text-lg space-y-4">
+                <p>
+                    倪柝聲（ㄊㄨㄛˋ ㄕㄥ）是二十世紀華人基督教最具影響力的教會領袖、解經家與作家之一。他發起了「地方召會」（又稱基督徒聚會處、小群）運動，主張教會應回到新約聖經的立場。
+                </p>
+                <p>
+                    儘管他生命最後的 20 年是在中華人民共和國的監獄中度過，但他的神學著作已被翻譯成多國語言，在全球基督徒中擁有極高地位。2009年，他更獲得美國國會議員的公開表彰，並被《今日基督教》評選為「二十世紀最具影響力的一百位基督徒」之一。
+                </p>
+            </div>
+        </section>
+
+        <!-- 1. 生平與名字由來 -->
+        <section id="section1" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
+            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-6">
+                1. 生平與名字由來
+            </h2>
+            <div class="space-y-6 text-stone-700">
+                <div class="bg-stone-50 p-5 rounded-xl border border-stone-100">
+                    <h3 class="font-bold text-stone-900 text-lg mb-2 flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-600 mr-2"></span> 原名與改名
+                    </h3>
+                    <p class="leading-relaxed">
+                        出生於廣東汕頭，祖籍福建福州。原名「倪述祖」，17歲（1920年）時因聽女佈道家余慈度傳福音而悔改信主。得救後他改名為「柝聲」，「柝」是古代巡夜人敲擊的梆子，意即他立志成為時代的更梆之聲，喚醒人認識真神。
+                    </p>
+                </div>
+                <div class="bg-stone-50 p-5 rounded-xl border border-stone-100">
+                    <h3 class="font-bold text-stone-900 text-lg mb-2 flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-600 mr-2"></span> 屬靈啟蒙
+                    </h3>
+                    <p class="leading-relaxed">
+                        他未曾就讀神學院，但他一生博覽群書。在信仰初期，他受到英國獨立女傳教士和受恩（Margaret Barber）的深度啟蒙，學習了絕對奉獻的屬靈生命，並透過她接觸到西方內裡生命派（如蓋恩夫人）與弟兄會的著作。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 地方召會運動 -->
+        <section id="section2" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
+            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-6">
+                2. 地方召會運動 (Church Ministry)
+            </h2>
+            <div class="bg-stone-50 p-6 rounded-xl border border-stone-100 leading-relaxed text-stone-700">
+                <h3 class="font-bold text-stone-900 text-lg mb-2">回歸聖經立場</h3>
+                <p>
+                    1922年起，他和同工在福州開始「擘餅聚會」，開啟了華人自立教會的步伐。他反對傳統宗派與牧師制度，提倡「一地一教會」的地方合一立場，在全中國以及東南亞各地建立了數百處地方合一的聚會處。
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. 文字執事與代表著作 -->
+        <section id="section3" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
+            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-4">
+                3. 文字執事與代表著作
+            </h2>
+            <p class="text-stone-600 mb-6">
+                倪柝聲具備極高的文學與解經恩賜，創辦了福音書局與《基督徒報》、《復興報》等刊物。他的著作強調基督做生命、屬靈生命的長進以及教會的身體建造。全球代表作包括：
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
+                    <h3 class="font-bold text-stone-900 text-lg mb-1">《屬靈人》</h3>
+                    <p class="text-sm text-stone-600">1926年患肺結核養病期間所寫的巨著，系統性剖析人的靈、魂、體三部分。</p>
+                </div>
+                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
+                    <h3 class="font-bold text-stone-900 text-lg mb-1">《正常的基督徒生活》</h3>
+                    <p class="text-xs font-semibold text-stone-500 mb-1">The Normal Christian Life</p>
+                    <p class="text-sm text-stone-600">深入闡述羅馬書，探討信徒如何經歷基督的死與復活。</p>
+                </div>
+                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
+                    <h3 class="font-bold text-stone-900 text-lg mb-1">《坐、行、站》</h3>
+                    <p class="text-xs font-semibold text-stone-500 mb-1">Sit, Walk, Stand</p>
+                    <p class="text-sm text-stone-600">以以弗所書為根基，精闢講解與基督同坐、憑祂而行、並在祂裡面站立。</p>
+                </div>
+                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
+                    <h3 class="font-bold text-stone-900 text-lg mb-1">《權柄與順服》</h3>
+                    <p class="text-xs font-semibold text-stone-500 mb-1">Spiritual Authority</p>
+                    <p class="text-sm text-stone-600">論述召會生活中的屬靈權柄架構與生命經歷。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 監禁與殉道 -->
+        <section id="section4" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
+            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-6">
+                4. 監禁與殉道
+            </h2>
+            <div class="space-y-6 text-stone-700">
+                <div>
+                    <h3 class="font-bold text-stone-900 text-lg mb-2">被捕入獄</h3>
+                    <p class="leading-relaxed">
+                        1949年中共政權成立後，倪柝聲選擇留在上海照顧教會。1952年，他因信仰以及其他政治指控被當局逮捕，並於1956年被判處15年徒刑，隨後又被延期監禁。
+                    </p>
+                </div>
+                <div class="bg-stone-900 text-stone-100 p-6 sm:p-8 rounded-xl shadow-inner relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-stone-800 text-9xl font-serif select-none pointer-events-none">”</div>
+                    <h3 class="font-bold text-amber-400 text-xl mb-4 font-serif-tc">最後的遺言</h3>
+                    <p class="text-stone-300 mb-4 text-sm leading-relaxed">
+                        1972年5月30日，他在安徽白茅嶺勞改農場因病逝世。他離世後，家人在他的枕頭下發現了一張紙條，上面用震顫的字跡寫著最後的信仰見證：
+                    </p>
+                    <blockquote class="font-serif-tc text-lg sm:text-xl text-amber-100 font-semibold border-l-2 border-amber-500 pl-4 py-1 leading-normal">
+                        「基督是神的兒子，為人贖罪而死，三日復活，這是宇宙間最大的事實。我信基督而死。倪柝聲。」
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 互動聯絡表單 (與 Google 試算表 GAS 串接) -->
+        <section id="contact" class="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-2xl p-6 sm:p-10 shadow-xl border border-stone-700">
+            <div class="max-w-2xl mx-auto text-center mb-8">
+                <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-amber-400 mb-3">
+                    進一步認識倪柝聲的信仰
+                </h2>
+                <p class="text-stone-300 text-sm sm:text-base">
+                    若您希望進一步了解屬靈著作或地方召會信仰內涵，請留下您的聯絡資料，我們將竭誠與您聯繫。
+                </p>
+            </div>
+
+            <form id="contactForm" class="max-w-xl mx-auto space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-stone-300 mb-1">您的姓名 *</label>
+                    <input type="text" id="name" required placeholder="請輸入姓名" class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-stone-300 mb-1">電子郵件 *</label>
+                        <input type="email" id="email" required placeholder="name@example.com" class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-stone-300 mb-1">聯絡電話</label>
+                        <input type="tel" id="phone" placeholder="0912-345-678" class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-medium text-stone-300 mb-1">想法或想詢問的內容</label>
+                    <textarea id="message" rows="4" placeholder="歡迎寫下您的想法..." class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-amber-600/30 transition duration-200">
+                    送出資料
+                </button>
+            </form>
+
+            <div id="formStatus" class="hidden max-w-xl mx-auto mt-4 p-4 rounded-lg text-center font-medium"></div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-stone-900 text-stone-400 py-8 text-center text-sm border-t border-stone-800">
+        <p>© 2026 倪柝聲一頁式紀念網頁. All rights reserved.</p>
+    </footer>
+
+    <!-- 原生 JavaScript 邏輯 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 預設的 GAS 部署網址
+            const defaultGasUrl = "https://script.google.com/macros/s/AKfycbxhjTRSt2AZLIJF5XSpOV_IcS6vGS__YRz2hiovwrXNUvC2YQTUT_jbybEoHsQojs4B/exec";
+
+            /* ==========================================
+               1. 行動裝置導覽選單控制
+               ========================================== */
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+
+            /* ==========================================
+               2. 數字時鐘更新
+               ========================================== */
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                
+                const clockTime = document.getElementById('clockTime');
+                if (clockTime) {
+                    clockTime.textContent = `${hours}:${minutes}:${seconds}`;
+                }
+
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const date = now.getDate();
+                const dayNames = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                const day = dayNames[now.getDay()];
+
+                const clockDate = document.getElementById('clockDate');
+                if (clockDate) {
+                    clockDate.textContent = `${year}年${month}月${date}日 ${day}`;
+                }
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            /* ==========================================
+               3. 齒輪選單與桌布切換
+               ========================================== */
+            const gearBtn = document.getElementById('gearBtn');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const wallpaperHero = document.getElementById('hero');
+            const presetWallpaper = document.getElementById('presetWallpaper');
+            const loadCsvBtn = document.getElementById('loadCsvBtn');
+            const csvUrlInput = document.getElementById('csvUrlInput');
+
+            if (gearBtn && settingsPanel) {
+                gearBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    settingsPanel.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!settingsPanel.contains(e.target) && e.target !== gearBtn) {
+                        settingsPanel.classList.remove('active');
+                    }
+                });
+            }
+
+            if (presetWallpaper && wallpaperHero) {
+                presetWallpaper.addEventListener('change', (e) => {
+                    wallpaperHero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('${e.target.value}')`;
+                });
+            }
+
+            if (loadCsvBtn && csvUrlInput && wallpaperHero) {
+                loadCsvBtn.addEventListener('click', () => {
+                    const url = csvUrlInput.value.trim();
+                    if (!url) {
+                        alert('請輸入有效的 CSV 網址！');
+                        return;
+                    }
+
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(csvText => {
+                            const lines = csvText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                            let imageUrl = lines[0];
+
+                            if (imageUrl.includes(',')) {
+                                const parts = imageUrl.split(',');
+                                imageUrl = parts.find(p => p.startsWith('http')) || parts[0];
+                            }
+
+                            imageUrl = imageUrl.replace(/^["']|["']$/g, '');
+
+                            if (imageUrl.startsWith('http')) {
+                                wallpaperHero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('${imageUrl}')`;
+                                alert('桌布載入成功！');
+                            } else {
+                                alert('剖析失敗，未在 CSV 中找到有效圖片網址。');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('CSV 載入錯誤:', err);
+                            alert('載入 CSV 失敗，請確認網址是否已開啟公開存取。');
+                        });
+                });
+            }
+
+            /* ==========================================
+               4. 表單提交處理 (Google 試算表串接)
+               ========================================== */
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formStatus = document.getElementById('formStatus');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const formData = {
+                        name: document.getElementById('name').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        message: document.getElementById('message').value.trim()
+                    };
+
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = '資料傳送中...';
+
+                    fetch(defaultGasUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    })
+                    .then(() => {
+                        formStatus.className = 'max-w-xl mx-auto mt-4 p-4 rounded-lg text-center font-medium bg-emerald-900/80 text-emerald-200 border border-emerald-700';
+                        formStatus.textContent = '感謝您的填寫！資料已成功送出，我們將儘快與您聯絡。';
+                        formStatus.classList.remove('hidden');
+                        contactForm.reset();
+                    })
+                    .catch(error => {
+                        console.error('表單送出錯誤:', error);
+                        formStatus.className = 'max-w-xl mx-auto mt-4 p-4 rounded-lg text-center font-medium bg-rose-900/80 text-rose-200 border border-rose-700';
+                        formStatus.textContent = '送出失敗，請確認網路連線或稍後再試。';
+                        formStatus.classList.remove('hidden');
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = '送出資料';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
