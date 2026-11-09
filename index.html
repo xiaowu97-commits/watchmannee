@@ -1,462 +1,556 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倪柝聲 (Watchman Nee) - 一頁式紀念網站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>我的網頁作品集 | Mobile Portfolio</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            scroll-behavior: smooth;
+        /* 手機端流暢點擊反饋與隱藏多餘滾動條 */
+        .tap-highlight-transparent {
+            -webkit-tap-highlight-color: transparent;
         }
-        
-        .font-serif-tc {
-            font-family: 'Noto Serif TC', serif;
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-
-        /* 數字時鐘與桌布背景樣式 */
-        .wallpaper-hero {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.5s ease-in-out;
-        }
-
-        /* 齒輪設定面板動畫 */
-        .settings-panel {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            transform: translateX(100%);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .settings-panel.active {
-            transform: translateX(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* 文字陰影增強可讀性 */
-        .text-shadow-lg {
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased selection:bg-amber-200 selection:text-amber-900">
+<body class="font-sans bg-slate-950 text-slate-100 min-h-screen flex flex-col pb-20 md:pb-8 selection:bg-indigo-500 selection:text-white tap-highlight-transparent">
 
-    <!-- 頂部導覽列 -->
-    <nav class="sticky top-0 z-40 bg-stone-900/90 backdrop-blur-md text-stone-100 shadow-md">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="#" class="font-serif-tc text-xl font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">
-                倪柝聲紀念網頁
-            </a>
-            <div class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#hero" class="hover:text-amber-400 transition">時鐘桌布</a>
-                <a href="#intro" class="hover:text-amber-400 transition">生平概述</a>
-                <a href="#section1" class="hover:text-amber-400 transition">名字由來</a>
-                <a href="#section2" class="hover:text-amber-400 transition">召會運動</a>
-                <a href="#section3" class="hover:text-amber-400 transition">代表著作</a>
-                <a href="#section4" class="hover:text-amber-400 transition">最後遺言</a>
-                <a href="#contact" class="hover:text-amber-400 transition bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-md">進一步認識</a>
-            </div>
-            <!-- 行動裝置選單按鈕 -->
-            <button id="mobileMenuBtn" class="md:hidden text-stone-300 hover:text-white focus:outline-none" aria-label="選單">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-        <!-- 行動裝置下拉選單 -->
-        <div id="mobileMenu" class="hidden md:hidden bg-stone-800 px-4 pt-2 pb-4 space-y-2 border-t border-stone-700">
-            <a href="#hero" class="block py-2 text-stone-300 hover:text-amber-400">時鐘桌布</a>
-            <a href="#intro" class="block py-2 text-stone-300 hover:text-amber-400">生平概述</a>
-            <a href="#section1" class="block py-2 text-stone-300 hover:text-amber-400">名字由來</a>
-            <a href="#section2" class="block py-2 text-stone-300 hover:text-amber-400">召會運動</a>
-            <a href="#section3" class="block py-2 text-stone-300 hover:text-amber-400">代表著作</a>
-            <a href="#section4" class="block py-2 text-stone-300 hover:text-amber-400">最後遺言</a>
-            <a href="#contact" class="block py-2 text-amber-400 font-semibold">進一步認識</a>
-        </div>
-    </nav>
-
-    <!-- 桌布與簡潔數字時鐘區塊 -->
-    <section id="hero" class="relative w-full h-[60vh] min-h-[400px] flex items-center justify-center wallpaper-hero text-white overflow-hidden">
-        
-        <!-- 中央數字時鐘與日期 -->
-        <div class="text-center z-10 px-4">
-            <div id="clockTime" class="font-serif-tc text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-shadow-lg mb-2">
-                00:00:00
-            </div>
-            <div id="clockDate" class="text-base sm:text-xl md:text-2xl font-light tracking-widest text-stone-200 text-shadow-lg">
-                2026年11月3日 星期二
-            </div>
-        </div>
-
-        <!-- 右上方齒輪按鈕 -->
-        <button id="gearBtn" class="absolute top-6 right-6 z-20 p-3 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition shadow-lg focus:outline-none" aria-label="設定桌布">
-            <svg class="w-6 h-6 transform hover:rotate-90 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-        </button>
-
-        <!-- 齒輪設定彈出面板 -->
-        <div id="settingsPanel" class="settings-panel absolute top-20 right-6 z-30 w-80 bg-stone-900/95 text-stone-100 p-6 rounded-2xl shadow-2xl backdrop-blur-md border border-stone-700">
-            <h3 class="text-lg font-semibold mb-4 border-b border-stone-700 pb-2 flex items-center justify-between">
-                <span>桌布設定</span>
-                <span class="text-xs text-stone-400">背景自訂</span>
-            </h3>
-
-            <!-- 選項 1: 選擇內建預設桌布 -->
-            <div class="mb-4">
-                <label class="block text-xs text-stone-300 mb-1">選擇內建桌布</label>
-                <select id="presetWallpaper" class="w-full bg-stone-800 border border-stone-600 rounded-lg px-3 py-2 text-sm text-stone-200 focus:outline-none focus:border-amber-500">
-                    <option value="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80">寂靜海岸</option>
-                    <option value="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1920&q=80">晨曦森林</option>
-                    <option value="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80">星空夜山</option>
-                    <option value="https://images.unsplash.com/photo-1499209974431-9dac3cea0047?auto=format&fit=crop&w=1920&q=80">寧靜光芒</option>
-                </select>
-            </div>
-
-            <!-- 選項 2: 輸入 CSV 發佈網址 -->
-            <div class="mb-2">
-                <label class="block text-xs text-stone-300 mb-1">載入 CSV 桌布網址</label>
-                <input type="text" id="csvUrlInput" placeholder="請貼上 CSV 發佈網址" class="w-full bg-stone-800 border border-stone-600 rounded-lg px-3 py-2 text-sm text-stone-200 focus:outline-none focus:border-amber-500">
-            </div>
-            <button id="loadCsvBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-medium py-2 rounded-lg text-sm transition mt-2">
-                載入 CSV 桌布
-            </button>
-        </div>
-    </section>
-
-    <!-- 主要內容區 -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-
-        <!-- 簡介區塊 -->
-        <section id="intro" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
-            <h1 class="font-serif-tc text-3xl sm:text-4xl font-bold text-stone-900 border-b-2 border-amber-600/60 pb-4 mb-6">
-                倪柝聲 <span class="text-xl sm:text-2xl font-normal text-stone-600 block sm:inline mt-1 sm:mt-0">(Watchman Nee)</span>
-            </h1>
-            <p class="text-sm font-semibold text-amber-800 bg-amber-50 inline-block px-3 py-1 rounded-full mb-6">
-                1903年11月4日 － 1972年5月30日
-            </p>
-            <div class="text-stone-700 leading-relaxed text-base sm:text-lg space-y-4">
-                <p>
-                    倪柝聲（ㄊㄨㄛˋ ㄕㄥ）是二十世紀華人基督教最具影響力的教會領袖、解經家與作家之一。他發起了「地方召會」（又稱基督徒聚會處、小群）運動，主張教會應回到新約聖經的立場。
-                </p>
-                <p>
-                    儘管他生命最後的 20 年是在中華人民共和國的監獄中度過，但他的神學著作已被翻譯成多國語言，在全球基督徒中擁有極高地位。2009年，他更獲得美國國會議員的公開表彰，並被《今日基督教》評選為「二十世紀最具影響力的一百位基督徒」之一。
-                </p>
-            </div>
-        </section>
-
-        <!-- 1. 生平與名字由來 -->
-        <section id="section1" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
-            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-6">
-                1. 生平與名字由來
-            </h2>
-            <div class="space-y-6 text-stone-700">
-                <div class="bg-stone-50 p-5 rounded-xl border border-stone-100">
-                    <h3 class="font-bold text-stone-900 text-lg mb-2 flex items-center">
-                        <span class="w-2.5 h-2.5 rounded-full bg-amber-600 mr-2"></span> 原名與改名
-                    </h3>
-                    <p class="leading-relaxed">
-                        出生於廣東汕頭，祖籍福建福州。原名「倪述祖」，17歲（1920年）時因聽女佈道家余慈度傳福音而悔改信主。得救後他改名為「柝聲」，「柝」是古代巡夜人敲擊的梆子，意即他立志成為時代的更梆之聲，喚醒人認識真神。
-                    </p>
+    <!-- 手機優先頂部導覽列 Header -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 sm:px-6">
+        <div class="max-w-md md:max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+                    <i class="fa-solid fa-layer-group text-sm"></i>
                 </div>
-                <div class="bg-stone-50 p-5 rounded-xl border border-stone-100">
-                    <h3 class="font-bold text-stone-900 text-lg mb-2 flex items-center">
-                        <span class="w-2.5 h-2.5 rounded-full bg-amber-600 mr-2"></span> 屬靈啟蒙
-                    </h3>
-                    <p class="leading-relaxed">
-                        他未曾就讀神學院，但他一生博覽群書。在信仰初期，他受到英國獨立女傳教士和受恩（Margaret Barber）的深度啟蒙，學習了絕對奉獻的屬靈生命，並透過她接觸到西方內裡生命派（如蓋恩夫人）與弟兄會的著作。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. 地方召會運動 -->
-        <section id="section2" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
-            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-6">
-                2. 地方召會運動 (Church Ministry)
-            </h2>
-            <div class="bg-stone-50 p-6 rounded-xl border border-stone-100 leading-relaxed text-stone-700">
-                <h3 class="font-bold text-stone-900 text-lg mb-2">回歸聖經立場</h3>
-                <p>
-                    1922年起，他和同工在福州開始「擘餅聚會」，開啟了華人自立教會的步伐。他反對傳統宗派與牧師制度，提倡「一地一教會」的地方合一立場，在全中國以及東南亞各地建立了數百處地方合一的聚會處。
-                </p>
-            </div>
-        </section>
-
-        <!-- 3. 文字執事與代表著作 -->
-        <section id="section3" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
-            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-4">
-                3. 文字執事與代表著作
-            </h2>
-            <p class="text-stone-600 mb-6">
-                倪柝聲具備極高的文學與解經恩賜，創辦了福音書局與《基督徒報》、《復興報》等刊物。他的著作強調基督做生命、屬靈生命的長進以及教會的身體建造。全球代表作包括：
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
-                    <h3 class="font-bold text-stone-900 text-lg mb-1">《屬靈人》</h3>
-                    <p class="text-sm text-stone-600">1926年患肺結核養病期間所寫的巨著，系統性剖析人的靈、魂、體三部分。</p>
-                </div>
-                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
-                    <h3 class="font-bold text-stone-900 text-lg mb-1">《正常的基督徒生活》</h3>
-                    <p class="text-xs font-semibold text-stone-500 mb-1">The Normal Christian Life</p>
-                    <p class="text-sm text-stone-600">深入闡述羅馬書，探討信徒如何經歷基督的死與復活。</p>
-                </div>
-                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
-                    <h3 class="font-bold text-stone-900 text-lg mb-1">《坐、行、站》</h3>
-                    <p class="text-xs font-semibold text-stone-500 mb-1">Sit, Walk, Stand</p>
-                    <p class="text-sm text-stone-600">以以弗所書為根基，精闢講解與基督同坐、憑祂而行、並在祂裡面站立。</p>
-                </div>
-                <div class="p-5 rounded-xl border border-stone-200 bg-amber-50/40 hover:bg-amber-50 transition">
-                    <h3 class="font-bold text-stone-900 text-lg mb-1">《權柄與順服》</h3>
-                    <p class="text-xs font-semibold text-stone-500 mb-1">Spiritual Authority</p>
-                    <p class="text-sm text-stone-600">論述召會生活中的屬靈權柄架構與生命經歷。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. 監禁與殉道 -->
-        <section id="section4" class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200/80">
-            <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-stone-900 border-l-4 border-amber-600 pl-4 mb-6">
-                4. 監禁與殉道
-            </h2>
-            <div class="space-y-6 text-stone-700">
                 <div>
-                    <h3 class="font-bold text-stone-900 text-lg mb-2">被捕入獄</h3>
-                    <p class="leading-relaxed">
-                        1949年中共政權成立後，倪柝聲選擇留在上海照顧教會。1952年，他因信仰以及其他政治指控被當局逮捕，並於1956年被判處15年徒刑，隨後又被延期監禁。
-                    </p>
-                </div>
-                <div class="bg-stone-900 text-stone-100 p-6 sm:p-8 rounded-xl shadow-inner relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 text-stone-800 text-9xl font-serif select-none pointer-events-none">”</div>
-                    <h3 class="font-bold text-amber-400 text-xl mb-4 font-serif-tc">最後的遺言</h3>
-                    <p class="text-stone-300 mb-4 text-sm leading-relaxed">
-                        1972年5月30日，他在安徽白茅嶺勞改農場因病逝世。他離世後，家人在他的枕頭下發現了一張紙條，上面用震顫的字跡寫著最後的信仰見證：
-                    </p>
-                    <blockquote class="font-serif-tc text-lg sm:text-xl text-amber-100 font-semibold border-l-2 border-amber-500 pl-4 py-1 leading-normal">
-                        「基督是神的兒子，為人贖罪而死，三日復活，這是宇宙間最大的事實。我信基督而死。倪柝聲。」
-                    </blockquote>
+                    <h1 class="text-base font-bold tracking-tight text-white leading-none">我的網頁作品集</h1>
+                    <span class="text-[10px] text-indigo-400 font-medium">Mobile-First Portfolio</span>
                 </div>
             </div>
-        </section>
 
-        <!-- 5. 互動聯絡表單 (與 Google 試算表 GAS 串接) -->
-        <section id="contact" class="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-2xl p-6 sm:p-10 shadow-xl border border-stone-700">
-            <div class="max-w-2xl mx-auto text-center mb-8">
-                <h2 class="font-serif-tc text-2xl sm:text-3xl font-bold text-amber-400 mb-3">
-                    進一步認識倪柝聲的信仰
-                </h2>
-                <p class="text-stone-300 text-sm sm:text-base">
-                    若您希望進一步了解屬靈著作或地方召會信仰內涵，請留下您的聯絡資料，我們將竭誠與您聯繫。
-                </p>
-            </div>
-
-            <form id="contactForm" class="max-w-xl mx-auto space-y-4">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-stone-300 mb-1">您的姓名 *</label>
-                    <input type="text" id="name" required placeholder="請輸入姓名" class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-stone-300 mb-1">電子郵件 *</label>
-                        <input type="email" id="email" required placeholder="name@example.com" class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-stone-300 mb-1">聯絡電話</label>
-                        <input type="tel" id="phone" placeholder="0912-345-678" class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                    </div>
-                </div>
-
-                <div>
-                    <label for="message" class="block text-sm font-medium text-stone-300 mb-1">想法或想詢問的內容</label>
-                    <textarea id="message" rows="4" placeholder="歡迎寫下您的想法..." class="w-full bg-stone-800/80 border border-stone-600 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
-                </div>
-
-                <button type="submit" id="submitBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-amber-600/30 transition duration-200">
-                    送出資料
+            <!-- 頂部切換按鈕 (作品目錄 / 關於我) -->
+            <div class="flex items-center bg-slate-800/80 p-0.5 rounded-full border border-slate-700 text-xs">
+                <button onclick="switchTab('catalog')" id="topBtnCatalog" class="px-3 py-1.5 rounded-full font-medium transition-all bg-indigo-600 text-white shadow-sm">
+                    作品目錄
                 </button>
-            </form>
+                <button onclick="switchTab('about')" id="topBtnAbout" class="px-3 py-1.5 rounded-full font-medium transition-all text-slate-400 hover:text-white">
+                    關於我
+                </button>
+            </div>
+        </div>
+    </header>
 
-            <div id="formStatus" class="hidden max-w-xl mx-auto mt-4 p-4 rounded-lg text-center font-medium"></div>
+    <!-- 主要容器 (手機尺寸優先：max-w-md，平板桌機平滑延伸至 max-w-4xl) -->
+    <main class="w-full max-w-md md:max-w-4xl mx-auto px-4 sm:px-6 py-6 flex-grow space-y-6">
+
+        <!-- =================== 區塊 1: 作品目錄 (Catalog Tab) =================== -->
+        <section id="sectionCatalog" class="space-y-6">
+
+            <!-- 手機橫向滑動分類標籤 -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+                <button onclick="filterCards('all')" class="filter-btn active whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium bg-indigo-600 text-white shadow-sm transition">
+                    全部作品 (4)
+                </button>
+                <button onclick="filterCards('memorial')" class="filter-btn whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    紀念專頁
+                </button>
+                <button onclick="filterCards('tool')" class="filter-btn whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    實用工具
+                </button>
+                <button onclick="filterCards('study')" class="filter-btn whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    研究圖表
+                </button>
+            </div>
+
+            <!-- 作品卡片列表 (手機單欄，平板桌機自動雙欄) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- 作品卡片 1: 倪柝聲紀念網頁 -->
+                <article class="project-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:border-slate-700 transition flex flex-col" data-category="memorial">
+                    <!-- 小圖卡 Preview -->
+                    <div class="relative h-44 bg-slate-800 overflow-hidden group">
+                        <img src="videos/WatchmanNee.jpg" alt="倪柝聲紀念網頁預覽" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                        <div class="absolute top-3 left-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-amber-500/90 text-stone-950 backdrop-blur-sm">
+                                紀念專頁
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <h2 class="text-lg font-bold text-white tracking-wide drop-shadow-md">倪柝聲紀念網頁</h2>
+                            <span class="text-xs text-amber-300/90 font-mono">web.html</span>
+                        </div>
+                    </div>
+
+                    <!-- 內容說明區 -->
+                    <div class="p-4 sm:p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <!-- 100字簡介 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-align-left text-indigo-400"></i> 作品簡介
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                本專案為高質感一頁式歷史屬靈紀念網站，深入整理倪柝聲先生生平年表、核心著作選輯、心靈箴言與經典名句。介面提供即時全文搜尋高亮、字級無段縮放與佳句一鍵複製功能，讓讀者無論在行動裝置或電腦端，皆能享受典雅沉靜的閱讀與研究體驗。
+                            </p>
+                        </div>
+
+                        <!-- 使用 API -->
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <div class="text-xs font-semibold text-slate-400 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-code text-cyan-400"></i> 使用到哪些 API
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Clipboard API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Web Storage API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">DOM Events API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Google Fonts API</span>
+                            </div>
+                        </div>
+
+                        <!-- 應用場景 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-compass text-amber-400"></i> 應用場景
+                            </div>
+                            <ul class="text-xs text-slate-300 space-y-1">
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-amber-400 text-[10px] mt-0.5"></i>
+                                    <span>屬靈經典研討、歷史人物專題閱讀與文獻檢索</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-amber-400 text-[10px] mt-0.5"></i>
+                                    <span>每日心靈默想、佳句一鍵複製分享至社群平台</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 打開按鈕 -->
+                        <div class="pt-2">
+                            <a href="web.html" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-medium text-sm shadow-md shadow-amber-900/30 active:scale-[0.98] transition">
+                                <span>打開作品</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 作品卡片 2: 極簡多風格超大數字計時鐘 -->
+                <article class="project-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:border-slate-700 transition flex flex-col" data-category="tool">
+                    <!-- 小圖卡 Preview -->
+                    <div class="relative h-44 bg-gradient-to-br from-cyan-950 via-slate-900 to-slate-950 overflow-hidden flex items-center justify-center group">
+                        <!-- 擬態時鐘視覺 -->
+                        <div class="text-center p-4">
+                            <div class="text-4xl sm:text-5xl font-mono font-bold tracking-widest text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-105 transition-transform duration-300">
+                                10:24<span class="animate-pulse">:30</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-2 font-mono tracking-wider">FOCUS TIMER & CLOCK</div>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                        <div class="absolute top-3 left-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-cyan-500/90 text-slate-950 backdrop-blur-sm">
+                                實用工具
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <h2 class="text-lg font-bold text-white tracking-wide drop-shadow-md">極簡多風格超大數字計時鐘</h2>
+                            <span class="text-xs text-cyan-300/90 font-mono">tools/colock.html</span>
+                        </div>
+                    </div>
+
+                    <!-- 內容說明區 -->
+                    <div class="p-4 sm:p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <!-- 100字簡介 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-align-left text-indigo-400"></i> 作品簡介
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                專為高效率專注打造的多風格時鐘與倒數計時工具。支援全螢幕沉浸顯示、番茄鐘工作法、自訂計時長度與提示音效，並收錄溫暖鄉村、復古打字機、書香典雅及深色護眼等多種視覺主題，提供極致流暢與簡約的美學計時介面。
+                            </p>
+                        </div>
+
+                        <!-- 使用 API -->
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <div class="text-xs font-semibold text-slate-400 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-code text-cyan-400"></i> 使用到哪些 API
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Web Audio API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Fullscreen API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Timing (setInterval)</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Local Storage API</span>
+                            </div>
+                        </div>
+
+                        <!-- 應用場景 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-compass text-amber-400"></i> 應用場景
+                            </div>
+                            <ul class="text-xs text-slate-300 space-y-1">
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-cyan-400 text-[10px] mt-0.5"></i>
+                                    <span>番茄鐘工作法專注讀書、程式開發與沉浸式自習</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-cyan-400 text-[10px] mt-0.5"></i>
+                                    <span>會議演講計時、平板放倒作為質感桌面翻頁時鐘</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 打開按鈕 -->
+                        <div class="pt-2">
+                            <a href="tools/colock.html" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-medium text-sm shadow-md shadow-cyan-900/30 active:scale-[0.98] transition">
+                                <span>打開作品</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 作品卡片 3: 倪柝聲桌布時鐘與紀念網站 -->
+                <article class="project-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:border-slate-700 transition flex flex-col" data-category="memorial">
+                    <!-- 小圖卡 Preview -->
+                    <div class="relative h-44 bg-slate-800 overflow-hidden group">
+                        <img src="videos/handwriting.0.jpg" alt="倪柝聲生平與桌布手跡預覽" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                        <div class="absolute top-3 left-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-purple-500/90 text-white backdrop-blur-sm">
+                                紀念專頁
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <h2 class="text-lg font-bold text-white tracking-wide drop-shadow-md">屬靈桌布與生平紀念站</h2>
+                            <span class="text-xs text-purple-300/90 font-mono">about/index.html</span>
+                        </div>
+                    </div>
+
+                    <!-- 內容說明區 -->
+                    <div class="p-4 sm:p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <!-- 100字簡介 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-align-left text-indigo-400"></i> 作品簡介
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                結合動態桌布更換與大字即時走時的特色網頁，收錄倪柝聲珍貴生平遺言手跡、名字由來與召會運動歷程。內建右側滑入式半透明設定面板，提供隨機高畫質風景切換與即時鐘錶展示，呈現兼具視覺美感與文史深度的互動體驗。
+                            </p>
+                        </div>
+
+                        <!-- 使用 API -->
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <div class="text-xs font-semibold text-slate-400 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-code text-cyan-400"></i> 使用到哪些 API
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Unsplash Web API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">JavaScript Date API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">CSS Transform API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Touch Event API</span>
+                            </div>
+                        </div>
+
+                        <!-- 應用場景 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-compass text-amber-400"></i> 應用場景
+                            </div>
+                            <ul class="text-xs text-slate-300 space-y-1">
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-purple-400 text-[10px] mt-0.5"></i>
+                                    <span>辦公桌面常態展示之動態靈修背景與數位鐘</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-purple-400 text-[10px] mt-0.5"></i>
+                                    <span>文史特展電子導覽手冊、教會青年歷史教育</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 打開按鈕 -->
+                        <div class="pt-2">
+                            <a href="about/index.html" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium text-sm shadow-md shadow-purple-900/30 active:scale-[0.98] transition">
+                                <span>打開作品</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 作品卡片 4: 亞伯拉罕神學歷程對照表 -->
+                <article class="project-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:border-slate-700 transition flex flex-col" data-category="study">
+                    <!-- 小圖卡 Preview -->
+                    <div class="relative h-44 bg-slate-800 overflow-hidden group">
+                        <img src="videos/亞伯拉罕.jpg" alt="亞伯拉罕神學對照表預覽" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                        <div class="absolute top-3 left-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-rose-500/90 text-white backdrop-blur-sm">
+                                研究圖表
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <h2 class="text-lg font-bold text-white tracking-wide drop-shadow-md">亞伯拉罕神學歷程對照表</h2>
+                            <span class="text-xs text-rose-300/90 font-mono">art/abraham_comparison_table.md</span>
+                        </div>
+                    </div>
+
+                    <!-- 內容說明區 -->
+                    <div class="p-4 sm:p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <!-- 100字簡介 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-align-left text-indigo-400"></i> 作品簡介
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                系統化梳理聖經創世記中亞伯拉罕十八個關鍵屬靈階段的結構化分析對照表。全面統整神的呼召、顯現、說話與立約歷程，清楚呈現神在各個階段的屬性與對信徒生命之深遠塑造，為查經與神學研究提供清晰直觀的對照檢索依據。
+                            </p>
+                        </div>
+
+                        <!-- 使用 API -->
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <div class="text-xs font-semibold text-slate-400 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-code text-cyan-400"></i> 使用到哪些 API
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Markdown Table Parser</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Horizontal Scroll API</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">PDF Viewer Embedding</span>
+                                <span class="px-2 py-0.5 text-[11px] bg-slate-800 text-cyan-300 rounded-md font-mono">Responsive Typography</span>
+                            </div>
+                        </div>
+
+                        <!-- 應用場景 -->
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-compass text-amber-400"></i> 應用場景
+                            </div>
+                            <ul class="text-xs text-slate-300 space-y-1">
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-rose-400 text-[10px] mt-0.5"></i>
+                                    <span>主日查經小組研討、神學課程教學講義與專題研經</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <i class="fa-solid fa-check text-rose-400 text-[10px] mt-0.5"></i>
+                                    <span>聖經生命歷程研讀、歷史經文階段比對與查考</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 打開按鈕 -->
+                        <div class="pt-2">
+                            <a href="art/abraham_comparison_table.md" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-medium text-sm shadow-md shadow-rose-900/30 active:scale-[0.98] transition">
+                                <span>打開作品</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- =================== 區塊 2: 關於我 (About Me Tab) =================== -->
+        <section id="sectionAbout" class="hidden space-y-6">
+
+            <!-- 個人檔案卡片 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl text-center relative overflow-hidden">
+                <div class="absolute -top-12 -left-12 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- 大頭照 -->
+                <div class="relative w-28 h-28 mx-auto rounded-full p-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-amber-500 shadow-xl shadow-indigo-500/20 mb-4">
+                    <img src="Gemini_Generated_Image_luqs77luqs77luqs.jpg" alt="個人頭像" class="w-full h-full object-cover rounded-full">
+                </div>
+
+                <h2 class="text-2xl font-bold text-white tracking-wide">網頁開發者 & 數位創作者</h2>
+                <p class="text-sm text-indigo-400 mt-1 font-medium">Front-End Developer & UI Craftsman</p>
+
+                <!-- 關於我簡短自述 -->
+                <div class="mt-5 text-left text-sm text-slate-300 leading-relaxed space-y-3 bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                    <p>
+                        👋 你好！歡迎來到我的個人作品集。我熱衷於將人文歷史、實用工具與現代前端科技融合，致力於打造符合「手機優先」體驗、介面優雅、響應流暢且細節考究的網頁應用。
+                    </p>
+                    <p>
+                        在每一個作品中，我注重純粹的程式碼結構、低延遲的互動動效與精準的使用者場景設計，讓每位使用者都能在行動裝置上享受到如同原生 App 般順暢的觸控瀏覽感受。
+                    </p>
+                </div>
+
+                <!-- 核心專長技能 -->
+                <div class="mt-6 text-left">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                        <i class="fa-solid fa-code text-indigo-400"></i> 核心技能與技術棧
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 text-xs bg-slate-800 text-slate-200 rounded-lg border border-slate-700/60 font-medium">
+                            <i class="fa-brands fa-html5 text-amber-500 mr-1"></i> HTML5 語意化
+                        </span>
+                        <span class="px-3 py-1 text-xs bg-slate-800 text-slate-200 rounded-lg border border-slate-700/60 font-medium">
+                            <i class="fa-brands fa-css3-alt text-blue-500 mr-1"></i> Tailwind CSS
+                        </span>
+                        <span class="px-3 py-1 text-xs bg-slate-800 text-slate-200 rounded-lg border border-slate-700/60 font-medium">
+                            <i class="fa-brands fa-js text-yellow-400 mr-1"></i> JavaScript (ES6+)
+                        </span>
+                        <span class="px-3 py-1 text-xs bg-slate-800 text-slate-200 rounded-lg border border-slate-700/60 font-medium">
+                            <i class="fa-solid fa-mobile-screen-button text-cyan-400 mr-1"></i> 手機優先 (Mobile-First)
+                        </span>
+                        <span class="px-3 py-1 text-xs bg-slate-800 text-slate-200 rounded-lg border border-slate-700/60 font-medium">
+                            <i class="fa-solid fa-gears text-purple-400 mr-1"></i> Web APIs 深度整合
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 聯絡與社群 -->
+                <div class="mt-6 pt-5 border-t border-slate-800 flex items-center justify-center gap-4">
+                    <a href="about/index.html" class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-xl transition border border-slate-700">
+                        <i class="fa-solid fa-circle-info text-indigo-400"></i>
+                        <span>更多站內介紹</span>
+                    </a>
+                    <button onclick="switchTab('catalog')" class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-xl transition shadow-md shadow-indigo-600/30">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>瀏覽作品目錄</span>
+                    </button>
+                </div>
+            </div>
+
         </section>
 
     </main>
 
-    <!-- 頁尾 -->
-    <footer class="bg-stone-900 text-stone-400 py-8 text-center text-sm border-t border-stone-800">
-        <p>© 2026 倪柝聲一頁式紀念網頁. All rights reserved.</p>
+    <!-- 手機端固定底部浮動導覽列 Bottom Navigation Bar (僅在小螢幕時吸附底部) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800/90 px-6 py-2 shadow-2xl">
+        <div class="flex items-center justify-around max-w-sm mx-auto">
+            <!-- 作品目錄 按鈕 -->
+            <button onclick="switchTab('catalog')" id="bottomNavCatalog" class="flex flex-col items-center gap-1 text-indigo-400 py-1 transition-colors">
+                <i class="fa-solid fa-shapes text-lg"></i>
+                <span class="text-[11px] font-medium">作品目錄</span>
+            </button>
+            <!-- 關於我 按鈕 -->
+            <button onclick="switchTab('about')" id="bottomNavAbout" class="flex flex-col items-center gap-1 text-slate-400 py-1 transition-colors">
+                <i class="fa-solid fa-user text-lg"></i>
+                <span class="text-[11px] font-medium">關於我</span>
+            </button>
+            <!-- 回到頂部 按鈕 -->
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex flex-col items-center gap-1 text-slate-400 py-1 hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-up text-lg"></i>
+                <span class="text-[11px] font-medium">回頂部</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 頁尾 (大螢幕顯示) -->
+    <footer class="hidden md:block border-t border-slate-800/80 mt-12 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-4xl mx-auto px-4 flex items-center justify-between">
+            <span>© 2026 我的網頁作品集 · Mobile-First Architecture</span>
+            <div class="space-x-4">
+                <button onclick="switchTab('catalog')" class="hover:text-slate-300">作品目錄</button>
+                <button onclick="switchTab('about')" class="hover:text-slate-300">關於我</button>
+                <a href="#top" class="hover:text-slate-300">回到頂端</a>
+            </div>
+        </div>
     </footer>
 
-    <!-- 原生 JavaScript 邏輯 -->
+    <!-- 互動腳本：分頁切換與分類篩選 (純前端，零額外依賴) -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 預設的 GAS 部署網址
-            const defaultGasUrl = "https://script.google.com/macros/s/AKfycbxhjTRSt2AZLIJF5XSpOV_IcS6vGS__YRz2hiovwrXNUvC2YQTUT_jbybEoHsQojs4B/exec";
+        // 切換 作品目錄 / 關於我 分頁
+        function switchTab(tab) {
+            const secCatalog = document.getElementById('sectionCatalog');
+            const secAbout = document.getElementById('sectionAbout');
+            
+            const topBtnCatalog = document.getElementById('topBtnCatalog');
+            const topBtnAbout = document.getElementById('topBtnAbout');
 
-            /* ==========================================
-               1. 行動裝置導覽選單控制
-               ========================================== */
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
+            const bottomNavCatalog = document.getElementById('bottomNavCatalog');
+            const bottomNavAbout = document.getElementById('bottomNavAbout');
 
-            if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
+            if (tab === 'catalog') {
+                secCatalog.classList.remove('hidden');
+                secAbout.classList.add('hidden');
 
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                    });
-                });
-            }
+                // 頂部按鈕狀態
+                topBtnCatalog.className = "px-3 py-1.5 rounded-full font-medium transition-all bg-indigo-600 text-white shadow-sm";
+                topBtnAbout.className = "px-3 py-1.5 rounded-full font-medium transition-all text-slate-400 hover:text-white";
 
-            /* ==========================================
-               2. 數字時鐘更新
-               ========================================== */
-            function updateClock() {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-                
-                const clockTime = document.getElementById('clockTime');
-                if (clockTime) {
-                    clockTime.textContent = `${hours}:${minutes}:${seconds}`;
+                // 手機底部按鈕狀態
+                if (bottomNavCatalog && bottomNavAbout) {
+                    bottomNavCatalog.className = "flex flex-col items-center gap-1 text-indigo-400 py-1 transition-colors";
+                    bottomNavAbout.className = "flex flex-col items-center gap-1 text-slate-400 py-1 transition-colors";
                 }
+            } else {
+                secCatalog.classList.add('hidden');
+                secAbout.classList.remove('hidden');
 
-                const year = now.getFullYear();
-                const month = now.getMonth() + 1;
-                const date = now.getDate();
-                const dayNames = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                const day = dayNames[now.getDay()];
+                // 頂部按鈕狀態
+                topBtnAbout.className = "px-3 py-1.5 rounded-full font-medium transition-all bg-indigo-600 text-white shadow-sm";
+                topBtnCatalog.className = "px-3 py-1.5 rounded-full font-medium transition-all text-slate-400 hover:text-white";
 
-                const clockDate = document.getElementById('clockDate');
-                if (clockDate) {
-                    clockDate.textContent = `${year}年${month}月${date}日 ${day}`;
+                // 手機底部按鈕狀態
+                if (bottomNavCatalog && bottomNavAbout) {
+                    bottomNavAbout.className = "flex flex-col items-center gap-1 text-indigo-400 py-1 transition-colors";
+                    bottomNavCatalog.className = "flex flex-col items-center gap-1 text-slate-400 py-1 transition-colors";
                 }
             }
 
-            setInterval(updateClock, 1000);
-            updateClock();
+            // 平滑回到頂端
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            /* ==========================================
-               3. 齒輪選單與桌布切換
-               ========================================== */
-            const gearBtn = document.getElementById('gearBtn');
-            const settingsPanel = document.getElementById('settingsPanel');
-            const wallpaperHero = document.getElementById('hero');
-            const presetWallpaper = document.getElementById('presetWallpaper');
-            const loadCsvBtn = document.getElementById('loadCsvBtn');
-            const csvUrlInput = document.getElementById('csvUrlInput');
+        // 分類篩選
+        function filterCards(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
 
-            if (gearBtn && settingsPanel) {
-                gearBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    settingsPanel.classList.toggle('active');
-                });
+            buttons.forEach(btn => {
+                btn.className = "filter-btn whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+            });
 
-                document.addEventListener('click', (e) => {
-                    if (!settingsPanel.contains(e.target) && e.target !== gearBtn) {
-                        settingsPanel.classList.remove('active');
-                    }
-                });
+            // 啟用點擊中的按鈕樣式
+            if (event && event.currentTarget) {
+                event.currentTarget.className = "filter-btn active whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium bg-indigo-600 text-white shadow-sm transition";
             }
 
-            if (presetWallpaper && wallpaperHero) {
-                presetWallpaper.addEventListener('change', (e) => {
-                    wallpaperHero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('${e.target.value}')`;
-                });
-            }
-
-            if (loadCsvBtn && csvUrlInput && wallpaperHero) {
-                loadCsvBtn.addEventListener('click', () => {
-                    const url = csvUrlInput.value.trim();
-                    if (!url) {
-                        alert('請輸入有效的 CSV 網址！');
-                        return;
-                    }
-
-                    fetch(url)
-                        .then(response => response.text())
-                        .then(csvText => {
-                            const lines = csvText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-                            let imageUrl = lines[0];
-
-                            if (imageUrl.includes(',')) {
-                                const parts = imageUrl.split(',');
-                                imageUrl = parts.find(p => p.startsWith('http')) || parts[0];
-                            }
-
-                            imageUrl = imageUrl.replace(/^["']|["']$/g, '');
-
-                            if (imageUrl.startsWith('http')) {
-                                wallpaperHero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('${imageUrl}')`;
-                                alert('桌布載入成功！');
-                            } else {
-                                alert('剖析失敗，未在 CSV 中找到有效圖片網址。');
-                            }
-                        })
-                        .catch(err => {
-                            console.error('CSV 載入錯誤:', err);
-                            alert('載入 CSV 失敗，請確認網址是否已開啟公開存取。');
-                        });
-                });
-            }
-
-            /* ==========================================
-               4. 表單提交處理 (Google 試算表串接)
-               ========================================== */
-            const contactForm = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const formStatus = document.getElementById('formStatus');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-
-                    const formData = {
-                        name: document.getElementById('name').value.trim(),
-                        email: document.getElementById('email').value.trim(),
-                        phone: document.getElementById('phone').value.trim(),
-                        message: document.getElementById('message').value.trim()
-                    };
-
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = '資料傳送中...';
-
-                    fetch(defaultGasUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    })
-                    .then(() => {
-                        formStatus.className = 'max-w-xl mx-auto mt-4 p-4 rounded-lg text-center font-medium bg-emerald-900/80 text-emerald-200 border border-emerald-700';
-                        formStatus.textContent = '感謝您的填寫！資料已成功送出，我們將儘快與您聯絡。';
-                        formStatus.classList.remove('hidden');
-                        contactForm.reset();
-                    })
-                    .catch(error => {
-                        console.error('表單送出錯誤:', error);
-                        formStatus.className = 'max-w-xl mx-auto mt-4 p-4 rounded-lg text-center font-medium bg-rose-900/80 text-rose-200 border border-rose-700';
-                        formStatus.textContent = '送出失敗，請確認網路連線或稍後再試。';
-                        formStatus.classList.remove('hidden');
-                    })
-                    .finally(() => {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = '送出資料';
-                    });
-                });
-            }
-        });
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

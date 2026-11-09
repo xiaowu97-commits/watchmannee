@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>極簡多風格超大數字倒數計時器</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+                        mono: ['SFMono-Regular', 'Consolas', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        vintage: ['"Courier Prime"', '"Special Elite"', 'Georgia', 'serif'],
+                    },
+                    colors: {
+                        cream: {
+                            50: '#fdfbf7',
+                            100: '#f7f3e9',
+                            200: '#efe6d2',
+                            300: '#e2d3b2',
+                            800: '#5a4d3a',
+                            900: '#382f23',
+                        },
+                        wood: {
+                            400: '#c29b6f',
+                            600: '#8c6239',
+                            700: '#6d4a27',
+                            800: '#4e3319',
+                            900: '#321f0e',
+                        },
+                        sage: {
+                            500: '#7d9571',
+                            600: '#647b59',
+                            700: '#4f6246',
+                        },
+                        brass: {
+                            300: '#e5c158',
+                            400: '#d4af37',
+                            500: '#aa820a',
+                            600: '#856404',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome 圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts 典雅與復古字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Quicksand:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 風格 1: 溫暖鄉村 Cozy Cottage */
+        body.theme-cottage {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f7f3e9;
+            background-image: radial-gradient(#e2d3b2 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #321f0e;
+        }
+        body.theme-cottage .timer-font {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        body.theme-cottage .main-card {
+            background-color: rgba(253, 251, 247, 0.88);
+            backdrop-filter: blur(8px);
+            border: 2px solid #e2d3b2;
+            box-shadow: 0 10px 25px -5px rgba(109, 74, 39, 0.08);
+            color: #4e3319;
+        }
+        body.theme-cottage .accent-btn {
+            background-color: #647b59;
+            color: #fdfbf7;
+        }
+        body.theme-cottage .accent-btn:hover {
+            background-color: #4f6246;
+        }
+        body.theme-cottage .progress-fill {
+            background-color: #647b59;
+        }
+
+        /* 風格 2: 復古黃銅 Vintage Brass */
+        body.theme-vintage {
+            font-family: 'Courier Prime', Georgia, monospace;
+            background-color: #1a1614;
+            background-image: radial-gradient(#332822 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+            color: #f0e6d2;
+        }
+        body.theme-vintage .timer-font {
+            font-family: 'Courier Prime', monospace;
+            letter-spacing: -0.03em;
+        }
+        body.theme-vintage .main-card {
+            background-color: rgba(28, 22, 19, 0.92);
+            backdrop-filter: blur(10px);
+            border: 2px solid #856404;
+            box-shadow: 0 0 35px rgba(133, 100, 4, 0.15), inset 0 0 15px rgba(0,0,0,0.5);
+            color: #d4af37;
+        }
+        body.theme-vintage .accent-btn {
+            background-color: #856404;
+            color: #f8f1e1;
+            border: 1px solid #d4af37;
+        }
+        body.theme-vintage .accent-btn:hover {
+            background-color: #aa820a;
+        }
+        body.theme-vintage .progress-fill {
+            background-color: #d4af37;
+        }
+
+        /* 風格 3: 現代極簡 Modern Minimal */
+        body.theme-minimal {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #f8fafc;
+        }
+        body.theme-minimal .timer-font {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+        }
+        body.theme-minimal .main-card {
+            background-color: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+        }
+        body.theme-minimal .accent-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+        body.theme-minimal .accent-btn:hover {
+            background-color: #2563eb;
+        }
+        body.theme-minimal .progress-fill {
+            background-color: #3b82f6;
+        }
+
+        /* 避免選擇文本 */
+        .no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        /* 平滑過渡 */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        
+        /* 隱藏數字輸入框箭頭 */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Modal 彈窗淡入淡出動畫 */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="theme-cottage min-h-screen flex flex-col justify-between p-4 md:p-8 no-select relative overflow-x-hidden" id="body">
+
+    <!-- 頂部列：標題與齒輪設定按鈕 -->
+    <header class="flex justify-between items-center w-full max-w-4xl mx-auto z-10 px-5 py-3.5 rounded-2xl main-card">
+        <div class="flex items-center space-x-3">
+            <span class="timer-font text-lg sm:text-xl font-bold tracking-wide flex items-center gap-2">
+                <i class="fa-solid fa-hourglass-half text-amber-600 dark:text-amber-400" id="headerIcon"></i>
+                <span id="headerTitle">倒數計時器</span>
+            </span>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+            <!-- 快捷暫停 / 開始 indicator -->
+            <span id="statusBadge" class="text-xs px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/10 font-medium mr-2">
+                預備
+            </span>
+
+            <!-- 齒輪設定按鈕 (點擊開起設定面板) -->
+            <button id="openSettingsBtn" class="p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition text-current focus:outline-none flex items-center justify-center gap-2" title="開啟設定">
+                <i class="fa-solid fa-gear text-xl hover:rotate-90 transition-transform duration-300"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 中央核心：超大顯示器 -->
+    <main class="flex-1 flex flex-col items-center justify-center my-auto w-full max-w-5xl mx-auto relative py-4">
+        
+        <!-- 時間進度條 -->
+        <div class="w-full max-w-xl bg-black/5 dark:bg-white/10 rounded-full h-2.5 mb-6 p-0.5 overflow-hidden">
+            <div id="progressBar" class="progress-fill h-full w-full transition-all duration-300 ease-linear rounded-full"></div>
+        </div>
+
+        <!-- 主顯示區域 -->
+        <div class="relative w-full flex flex-col justify-center items-center main-card p-6 sm:p-12 rounded-3xl my-2">
+            
+            <!-- 超大數字倒數顯示 -->
+            <div id="displayContainer" class="cursor-pointer select-none text-center w-full" title="點擊暫停/開始">
+                <div id="timeDisplay" class="timer-font font-bold tracking-tight text-[18vw] sm:text-[20vw] lg:text-[210px] leading-none transition-all drop-shadow-sm my-2">
+                    25:00
+                </div>
+            </div>
+
+            <!-- 底部裝飾小字 -->
+            <div id="subSubtitle" class="absolute -bottom-3 opacity-60 text-xs tracking-widest uppercase timer-font">
+                ✦ Cozy Cottage Style ✦
+            </div>
+        </div>
+
+        <!-- 預設快捷時間選項 (常用) -->
+        <div id="presetContainer" class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-8">
+            <button data-minutes="5" class="preset-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl main-card hover:opacity-80 text-sm sm:text-base font-bold shadow-sm transition transform hover:-translate-y-0.5">5 分鐘</button>
+            <button data-minutes="10" class="preset-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl main-card hover:opacity-80 text-sm sm:text-base font-bold shadow-sm transition transform hover:-translate-y-0.5">10 分鐘</button>
+            <button data-minutes="25" class="preset-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl main-card hover:opacity-80 text-sm sm:text-base font-bold shadow-sm transition transform hover:-translate-y-0.5">25 分鐘 (番茄)</button>
+            <button data-minutes="60" class="preset-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl main-card hover:opacity-80 text-sm sm:text-base font-bold shadow-sm transition transform hover:-translate-y-0.5">60 分鐘</button>
+        </div>
+    </main>
+
+    <!-- 底部控制按鈕列 -->
+    <footer class="w-full max-w-xl mx-auto pb-4 sm:pb-6 z-10">
+        <div class="flex items-center justify-center space-x-4 sm:space-x-6">
+            
+            <!-- -1 分鐘 -->
+            <button id="minusMinBtn" class="p-4 rounded-2xl main-card hover:opacity-80 transition transform active:scale-95 shadow-md flex items-center justify-center" title="減少1分鐘">
+                <span class="text-sm font-bold timer-font">-1m</span>
+            </button>
+
+            <!-- 主要按鈕：開始 / 暫停 -->
+            <button id="startPauseBtn" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full accent-btn shadow-lg flex items-center justify-center transition transform active:scale-95 focus:outline-none">
+                <i class="fa-solid fa-play text-2xl sm:text-3xl ml-1" id="startPauseIcon"></i>
+            </button>
+
+            <!-- 重置按鈕 -->
+            <button id="resetBtn" class="p-4 rounded-2xl main-card hover:opacity-80 transition transform active:scale-95 shadow-md flex items-center justify-center" title="重置">
+                <i class="fa-solid fa-rotate-left text-lg"></i>
+            </button>
+
+            <!-- +1 分鐘 -->
+            <button id="plusMinBtn" class="p-4 rounded-2xl main-card hover:opacity-80 transition transform active:scale-95 shadow-md flex items-center justify-center" title="增加1分鐘">
+                <span class="text-sm font-bold timer-font">+1m</span>
+            </button>
+
+        </div>
+    </footer>
+
+    <!-- 齒輪設定彈窗 (Settings Modal) -->
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden transition-opacity duration-300 opacity-0">
+        <div class="main-card w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative transform transition-all duration-300 scale-95" id="modalContent">
+            
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center border-b border-black/10 dark:border-white/10 pb-4 mb-6">
+                <h3 class="text-xl font-bold flex items-center gap-2 timer-font">
+                    <i class="fa-solid fa-sliders"></i> 計時器參數與風格設定
+                </h3>
+                <button id="closeSettingsBtn" class="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Section -->
+            <div class="space-y-6">
+                
+                <!-- 1. 視覺風格與配色選擇器 (提供 3 種風格) -->
+                <div>
+                    <label class="block text-xs uppercase tracking-wider font-bold mb-3 opacity-70">選擇視覺風格主題</label>
+                    <div class="grid grid-cols-3 gap-2.5">
+                        <!-- 風格 1: 溫暖鄉村 -->
+                        <button type="button" data-style="cottage" class="style-select-btn p-3 rounded-2xl border-2 flex flex-col items-center justify-center gap-1.5 transition text-xs font-bold bg-[#f7f3e9] text-[#321f0e] border-amber-800/40">
+                            <i class="fa-solid fa-wheat-awn text-base text-amber-700"></i>
+                            <span>溫暖鄉村</span>
+                        </button>
+                        <!-- 風格 2: 復古黃銅 -->
+                        <button type="button" data-style="vintage" class="style-select-btn p-3 rounded-2xl border-2 flex flex-col items-center justify-center gap-1.5 transition text-xs font-bold bg-[#1a1614] text-[#d4af37] border-amber-600/30">
+                            <i class="fa-solid fa-compass text-base text-amber-500"></i>
+                            <span>復古黃銅</span>
+                        </button>
+                        <!-- 風格 3: 現代極簡 -->
+                        <button type="button" data-style="minimal" class="style-select-btn p-3 rounded-2xl border-2 flex flex-col items-center justify-center gap-1.5 transition text-xs font-bold bg-[#0f172a] text-white border-blue-500/30">
+                            <i class="fa-solid fa-circle-half-stroke text-base text-blue-400"></i>
+                            <span>現代極簡</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. 自訂時間輸入 (分/秒) -->
+                <div>
+                    <label class="block text-xs uppercase tracking-wider font-bold mb-2 opacity-70">設定時間 (分 / 秒)</label>
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-1">
+                            <div class="text-xs mb-1 opacity-60">分鐘 (M)</div>
+                            <input type="number" id="customInputM" min="0" max="999" value="25" class="w-full bg-black/5 dark:bg-white/10 rounded-xl px-4 py-2.5 border border-black/10 dark:border-white/10 font-bold text-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <span class="text-xl font-bold mt-4">:</span>
+                        <div class="flex-1">
+                            <div class="text-xs mb-1 opacity-60">秒鐘 (S)</div>
+                            <input type="number" id="customInputS" min="0" max="59" value="0" class="w-full bg-black/5 dark:bg-white/10 rounded-xl px-4 py-2.5 border border-black/10 dark:border-white/10 font-bold text-center focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <button id="applyTimeBtn" class="mt-4 px-4 py-2.5 rounded-xl accent-btn font-bold text-sm hover:opacity-90 transition">
+                            套用
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. 功能切換 (音效 & 全螢幕) -->
+                <div class="pt-2 border-t border-black/10 dark:border-white/10 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-volume-high text-base opacity-70"></i> 提示音效
+                        </span>
+                        <button id="modalSoundBtn" class="px-4 py-1.5 rounded-xl bg-black/10 dark:bg-white/10 text-sm font-bold transition">
+                            開啟
+                        </button>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-expand text-base opacity-70"></i> 全螢幕顯示
+                        </span>
+                        <button id="modalFullscreenBtn" class="px-4 py-1.5 rounded-xl bg-black/10 dark:bg-white/10 text-sm font-bold transition">
+                            切換
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Note -->
+            <div class="mt-6 pt-4 border-t border-black/10 dark:border-white/10 text-center text-xs opacity-50">
+                提示：按 `Space` 暫停/開始，`R` 重置，`F` 全螢幕
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // DOM 元素選取
+        const timeDisplay = document.getElementById('timeDisplay');
+        const displayContainer = document.getElementById('displayContainer');
+        const startPauseBtn = document.getElementById('startPauseBtn');
+        const startPauseIcon = document.startPauseIcon || document.getElementById('startPauseIcon');
+        const resetBtn = document.getElementById('resetBtn');
+        const plusMinBtn = document.getElementById('plusMinBtn');
+        const minusMinBtn = document.getElementById('minusMinBtn');
+        const progressBar = document.getElementById('progressBar');
+        const statusBadge = document.getElementById('statusBadge');
+        const headerTitle = document.getElementById('headerTitle');
+        const headerIcon = document.getElementById('headerIcon');
+        const subSubtitle = document.getElementById('subSubtitle');
+
+        // Modal DOM 元素
+        const settingsModal = document.getElementById('settingsModal');
+        const modalContent = document.getElementById('modalContent');
+        const openSettingsBtn = document.getElementById('openSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const customInputM = document.getElementById('customInputM');
+        const customInputS = document.getElementById('customInputS');
+        const applyTimeBtn = document.getElementById('applyTimeBtn');
+        const modalSoundBtn = document.getElementById('modalSoundBtn');
+        const modalFullscreenBtn = document.getElementById('modalFullscreenBtn');
+
+        // 狀態變數
+        let totalSeconds = 25 * 60; // 預設 25 分鐘
+        let remainingSeconds = 25 * 60;
+        let timerInterval = null;
+        let isRunning = false;
+        let isSoundOn = true;
+        let currentStyle = 'cottage'; // cottage, vintage, minimal
+
+        // Web Audio API 音效合成器
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playBeep(freq = 520, type = 'sine', duration = 0.2) {
+            if (!isSoundOn) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.error("Audio Playback Error", e);
+            }
+        }
+
+        // 倒數結束提示聲：和弦提醒
+        function playAlarm() {
+            if (!isSoundOn) return;
+            const notes = currentStyle === 'vintage' ? [440, 554.37, 659.25, 880] : [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, idx) => {
+                setTimeout(() => {
+                    playBeep(freq, 'sine', 0.8);
+                }, idx * 200);
+            });
+        }
+
+        // 格式化時間 (秒 -> MM:SS 或 HH:MM:SS)
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            const pad = (num) => String(num).padStart(2, '0');
+
+            if (h > 0) {
+                return `${pad(h)}:${pad(m)}:${pad(s)}`;
+            }
+            return `${pad(m)}:${pad(s)}`;
+        }
+
+        // 更新畫面顯示
+        function updateDisplay() {
+            const timeStr = formatTime(remainingSeconds);
+            timeDisplay.textContent = timeStr;
+            document.title = `${timeStr} - 倒數計時器`;
+
+            // 更新進度條
+            if (totalSeconds > 0) {
+                const percentage = (remainingSeconds / totalSeconds) * 100;
+                progressBar.style.width = `${Math.max(0, percentage)}%`;
+            } else {
+                progressBar.style.width = '0%';
+            }
+        }
+
+        // 開始倒數
+        function startTimer() {
+            if (isRunning) return;
+            if (remainingSeconds <= 0) return;
+
+            isRunning = true;
+            statusBadge.textContent = "進行中";
+            statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium mr-2";
+            
+            startPauseIcon.className = 'fa-solid fa-pause text-2xl sm:text-3xl';
+            playBeep(440, 'sine', 0.15);
+
+            timerInterval = setInterval(() => {
+                if (remainingSeconds > 0) {
+                    remainingSeconds--;
+                    updateDisplay();
+                } else {
+                    pauseTimer();
+                    statusBadge.textContent = "時間到！";
+                    statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-red-500/20 text-red-600 dark:text-red-400 font-bold mr-2";
+                    playAlarm();
+                }
+            }, 1000);
+        }
+
+        // 暫停倒數
+        function pauseTimer() {
+            if (!isRunning) return;
+            isRunning = false;
+            clearInterval(timerInterval);
+            timerInterval = null;
+
+            statusBadge.textContent = "已暫停";
+            statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium mr-2";
+
+            startPauseIcon.className = 'fa-solid fa-play text-2xl sm:text-3xl ml-1';
+            playBeep(350, 'sine', 0.15);
+        }
+
+        // 切換開始/暫停
+        function toggleTimer() {
+            if (isRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        // 重置倒數
+        function resetTimer() {
+            pauseTimer();
+            remainingSeconds = totalSeconds;
+            statusBadge.textContent = "預備";
+            statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/10 font-medium mr-2";
+            updateDisplay();
+            playBeep(300, 'sine', 0.2);
+        }
+
+        // 設定總秒數
+        function setTime(minutes, seconds = 0) {
+            pauseTimer();
+            totalSeconds = (minutes * 60) + seconds;
+            remainingSeconds = totalSeconds;
+            
+            // 同步更新自訂輸入框
+            customInputM.value = minutes;
+            customInputS.value = seconds;
+
+            statusBadge.textContent = "預備";
+            statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/10 font-medium mr-2";
+            updateDisplay();
+            playBeep(520, 'sine', 0.12);
+        }
+
+        // 微調時間 (+1m / -1m)
+        function adjustTime(amountInSeconds) {
+            const newTime = Math.max(0, remainingSeconds + amountInSeconds);
+            remainingSeconds = newTime;
+            if (remainingSeconds > totalSeconds) {
+                totalSeconds = remainingSeconds;
+            }
+            updateDisplay();
+            playBeep(amountInSeconds > 0 ? 600 : 380, 'sine', 0.1);
+        }
+
+        // 切換視覺風格
+        function setStyleTheme(styleName) {
+            currentStyle = styleName;
+            document.body.className = `theme-${styleName} min-h-screen flex flex-col justify-between p-4 md:p-8 no-select relative overflow-x-hidden`;
+
+            // 更新標題與飾標
+            if (styleName === 'cottage') {
+                headerTitle.textContent = "溫暖鄉村倒數計時";
+                headerIcon.className = "fa-solid fa-wheat-awn text-amber-700";
+                subSubtitle.textContent = "✦ Cozy Cottage Style ✦";
+            } else if (styleName === 'vintage') {
+                headerTitle.textContent = "復古黃銅計時儀";
+                headerIcon.className = "fa-solid fa-compass text-amber-500";
+                subSubtitle.textContent = "✦ Vintage Brass Timekeeper ✦";
+            } else if (styleName === 'minimal') {
+                headerTitle.textContent = "現代極簡倒數計時";
+                headerIcon.className = "fa-solid fa-stopwatch text-blue-400";
+                subSubtitle.textContent = "✦ Modern Minimalist Timer ✦";
+            }
+
+            // 更新 Modal 內的選取高亮
+            document.querySelectorAll('.style-select-btn').forEach(btn => {
+                if (btn.getAttribute('data-style') === styleName) {
+                    btn.classList.add('ring-2', 'ring-offset-2', 'ring-amber-500');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-offset-2', 'ring-amber-500');
+                }
+            });
+
+            playBeep(580, 'sine', 0.1);
+        }
+
+        // 開啟/關閉 Modal 動畫
+        function openSettings() {
+            settingsModal.classList.remove('hidden');
+            setTimeout(() => {
+                settingsModal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            playBeep(450, 'sine', 0.1);
+        }
+
+        function closeSettings() {
+            settingsModal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                settingsModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- 事件監聽 ---
+
+        // 開關 Modal
+        openSettingsBtn.addEventListener('click', openSettings);
+        closeSettingsBtn.addEventListener('click', closeSettings);
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) closeSettings();
+        });
+
+        // 風格按鈕點擊
+        document.querySelectorAll('.style-select-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const style = btn.getAttribute('data-style');
+                setStyleTheme(style);
+            });
+        });
+
+        // 自訂時間套用
+        applyTimeBtn.addEventListener('click', () => {
+            const m = parseInt(customInputM.value) || 0;
+            const s = parseInt(customInputS.value) || 0;
+            setTime(m, s);
+            closeSettings();
+        });
+
+        // 音效切換 (Modal 內)
+        modalSoundBtn.addEventListener('click', () => {
+            isSoundOn = !isSoundOn;
+            modalSoundBtn.textContent = isSoundOn ? "開啟" : "靜音";
+            modalSoundBtn.className = isSoundOn 
+                ? "px-4 py-1.5 rounded-xl bg-black/10 dark:bg-white/10 text-sm font-bold transition"
+                : "px-4 py-1.5 rounded-xl bg-red-500/20 text-red-600 dark:text-red-400 text-sm font-bold transition";
+            if (isSoundOn) playBeep(600, 'sine', 0.1);
+        });
+
+        // 全螢幕切換 (Modal 內)
+        modalFullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.error(err));
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        });
+
+        // 點擊數字控制開始/暫停
+        displayContainer.addEventListener('click', toggleTimer);
+
+        // 主要按鈕控制
+        startPauseBtn.addEventListener('click', toggleTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        plusMinBtn.addEventListener('click', () => adjustTime(60));
+        minusMinBtn.addEventListener('click', () => adjustTime(-60));
+
+        // 預設時間按鈕
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const mins = parseInt(e.target.getAttribute('data-minutes'));
+                setTime(mins, 0);
+            });
+        });
+
+        // 鍵盤快捷鍵
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return; // 輸入框中不觸發
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                toggleTimer();
+            } else if (e.code === 'KeyR') {
+                resetTimer();
+            } else if (e.code === 'ArrowUp') {
+                e.preventDefault();
+                adjustTime(60);
+            } else if (e.code === 'ArrowDown') {
+                e.preventDefault();
+                adjustTime(-60);
+            } else if (e.code === 'KeyF') {
+                modalFullscreenBtn.click();
+            } else if (e.code === 'Escape' && !settingsModal.classList.contains('hidden')) {
+                closeSettings();
+            }
+        });
+
+        // 初始化
+        setStyleTheme('cottage');
+        updateDisplay();
+    </script>
+</body>
+</html>

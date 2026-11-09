@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倪柝聲 (Watchman Nee) - 一頁式屬靈紀念與著作簡介</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: 思源宋體 (Serif) & 思源黑體 (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            800: '#92400e',
+                            900: '#78350f',
+                            950: '#451a03',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 高亮樣式 */
+        mark.highlight {
+            background-color: #fef08a;
+            color: #854d0e;
+            padding: 0 4px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="font-sans bg-stone-900 text-stone-200 antialiased selection:bg-amber-700 selection:text-white leading-relaxed min-h-screen flex flex-col">
+
+    <!-- 導覽列 Navigation -->
+    <header class="sticky top-0 z-40 bg-stone-900/90 backdrop-blur-md border-b border-stone-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="font-serif text-xl font-bold tracking-wider text-amber-500 hover:text-amber-400 transition-colors flex items-center space-x-2">
+                <span>倪柝聲紀念網頁</span>
+            </a>
+            
+            <!-- 桌面版導覽連結 -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-stone-300">
+                <a href="#about" class="hover:text-amber-400 transition-colors">生平與名字</a>
+                <a href="#timeline-sec" class="hover:text-amber-400 transition-colors">大事年表</a>
+                <a href="#soul-station" class="hover:text-amber-400 transition-colors">心靈補給</a>
+                <a href="#books-sec" class="hover:text-amber-400 transition-colors">代表著作</a>
+                <a href="#quotes-sec" class="hover:text-amber-400 transition-colors">名言選輯</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors">留言聯絡</a>
+            </nav>
+
+            <!-- 齒輪與手機版選單 -->
+            <div class="flex items-center space-x-3">
+                <button id="settingsBtn" title="設定輪播時間" class="p-2 text-stone-400 hover:text-amber-400 hover:bg-stone-800 rounded-full transition-colors focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </button>
+                <button id="mobileMenuBtn" class="md:hidden p-2 text-stone-400 hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 手機選單彈窗 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-stone-800 border-b border-stone-700 px-4 pt-2 pb-4 space-y-2 text-stone-300">
+            <a href="#about" class="block py-2 hover:text-amber-400">生平與名字</a>
+            <a href="#timeline-sec" class="block py-2 hover:text-amber-400">大事年表</a>
+            <a href="#soul-station" class="block py-2 hover:text-amber-400">心靈補給</a>
+            <a href="#books-sec" class="block py-2 hover:text-amber-400">代表著作</a>
+            <a href="#quotes-sec" class="block py-2 hover:text-amber-400">名言選輯</a>
+            <a href="#contact" class="block py-2 hover:text-amber-400">留言聯絡</a>
+        </div>
+    </header>
+
+    <!-- 齒輪控制面板 Modal (只保留輪播時間設定) -->
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-stone-800 border border-stone-700 rounded-xl p-6 w-11/12 max-w-md shadow-2xl relative">
+            <h3 class="font-serif text-xl font-bold text-amber-500 mb-4 flex items-center space-x-2">
+                <span>輪播設定</span>
+            </h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-stone-300 mb-2">桌布輪播時間切換</label>
+                    <select id="intervalSelect" class="w-full bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-stone-200 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                        <option value="19000">19 秒</option>
+                        <option value="30000" selected>30 秒 (預設)</option>
+                        <option value="60000">60 秒</option>
+                        <option value="90000">90 秒</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button id="closeSettingsBtn" class="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2 rounded-lg font-medium transition-colors">
+                    關閉並儲存
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 頂部 Hero 區塊 (左側數字時鐘與日期 / 右側縮小輪播桌布) -->
+    <section class="relative bg-stone-950 py-12 md:py-16 border-b border-stone-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            <!-- 左側：數字時鐘與日期 + 標題 -->
+            <div class="md:col-span-7 space-y-4 text-center md:text-left">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 bg-stone-800/80 border border-stone-700 rounded-full text-amber-400 text-xs font-mono">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>即時時間動態展示</span>
+                </div>
+                
+                <!-- 數字時鐘 Display -->
+                <div class="py-2">
+                    <div id="clockTime" class="font-mono text-4xl sm:text-6xl font-bold text-stone-100 tracking-wider">
+                        00:00:00
+                    </div>
+                    <div id="clockDate" class="font-serif text-stone-400 text-lg sm:text-xl mt-1">
+                        ---- 年 -- 月 -- 日 星期-
+                    </div>
+                </div>
+
+                <h1 class="font-serif text-3xl sm:text-5xl font-bold text-amber-500 tracking-tight leading-tight">
+                    倪柝聲 <span class="text-xl sm:text-2xl font-normal text-stone-400">(Watchman Nee)</span>
+                </h1>
+                <p class="text-stone-300 text-base sm:text-lg max-w-xl">
+                    二十世紀中國地方教會運動的核心先驅，其屬靈著作與生命見證影響全球無數基督徒的信仰實踐。
+                </p>
+            </div>
+
+            <!-- 右側：縮小版面桌布展示區 (照片輪播) -->
+            <div class="md:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-sm h-72 sm:h-80 rounded-2xl overflow-hidden border-2 border-stone-700 shadow-2xl bg-stone-900 group">
+                    <div id="heroBg" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent"></div>
+                    
+                    <div class="absolute bottom-4 left-4 right-4 text-left">
+                        <span class="text-xs font-mono text-amber-400 bg-black/60 px-2 py-1 rounded">動態桌布輪播</span>
+                        <p id="photoCaption" class="text-xs text-stone-300 mt-1 line-clamp-1">載入 CSV 照片中...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 搜尋工具列 Search Section -->
+    <section class="bg-stone-900 py-6 border-b border-stone-800 sticky top-16 z-30 shadow-md">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="輸入關鍵字搜尋（例如：屬靈人、1922、十字架、和受恩）..." class="w-full bg-stone-800 border border-stone-700 rounded-xl px-5 py-3 pl-12 text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all">
+                <svg class="w-5 h-5 text-stone-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <button id="clearSearchBtn" class="hidden absolute right-3 top-2.5 px-3 py-1 bg-stone-700 text-stone-300 hover:text-white text-xs rounded-md">清除</button>
+            </div>
+            <div id="searchStats" class="mt-2 text-xs text-amber-400/90 text-right h-4 font-mono"></div>
+        </div>
+    </section>
+
+    <!-- 心靈補給站 (互動推薦) -->
+    <section id="soul-station" class="py-12 bg-stone-950 border-b border-stone-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8">
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-amber-500">屬靈心靈補給站</h2>
+                <p class="text-stone-400 text-sm mt-1">選擇您目前的生命狀態與處境，為您推薦適切的屬靈著作與名言</p>
+            </div>
+
+            <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 shadow-xl space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-stone-400 mb-2">1. 目前遇到的處境與事件：</label>
+                        <select id="situationSelect" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-stone-200 text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                            <option value="trough">處於人生低谷 / 疑惑迷惘</option>
+                            <option value="growth">渴望屬靈突破 / 生命長進</option>
+                            <option value="decision">面臨重大抉擇 / 尋求神旨意</option>
+                            <option value="trial">遭遇苦難試煉 / 心靈受挫</option>
+                            <option value="service">服事感到疲憊 / 缺少動力</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-stone-400 mb-2">2. 現在的心情狀態：</label>
+                        <select id="moodSelect" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-stone-200 text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                            <option value="anxious">焦慮不安 / 缺乏平安</option>
+                            <option value="weary">疲憊軟弱 / 需要安息</option>
+                            <option value="eager">渴慕追求 / 平靜渴望</option>
+                            <option value="thankful">感謝讚美 / 經歷恩典</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button id="recommendBtn" class="bg-amber-600 hover:bg-amber-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg hover:shadow-amber-900/30">
+                        獲取專屬屬靈推薦
+                    </button>
+                </div>
+
+                <!-- 推薦結果區 -->
+                <div id="recommendResult" class="hidden mt-6 pt-6 border-t border-stone-800 space-y-4">
+                    <div class="bg-stone-950 border border-amber-900/40 rounded-xl p-5">
+                        <span class="text-xs font-mono text-amber-500 bg-amber-950/60 px-2 py-0.5 rounded">推薦著作</span>
+                        <h4 id="recBookTitle" class="font-serif text-lg font-bold text-amber-400 mt-2"></h4>
+                        <p id="recBookDesc" class="text-stone-300 text-sm mt-1"></p>
+                    </div>
+                    <div class="bg-stone-950 border border-stone-800 rounded-xl p-5">
+                        <span class="text-xs font-mono text-stone-400 bg-stone-800 px-2 py-0.5 rounded">應時名言</span>
+                        <blockquote id="recQuote" class="font-serif italic text-stone-200 text-base mt-2 border-l-2 border-amber-500 pl-3"></blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 生平與名字由來 About Section -->
+    <section id="about" class="py-16 bg-stone-900 border-b border-stone-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <h2 class="font-serif text-3xl font-bold text-amber-500 mb-8 border-l-4 border-amber-500 pl-4">
+                生平概述與名字由來
+            </h2>
+            <div class="space-y-6 text-stone-300 leading-relaxed text-base sm:text-lg">
+                <div class="bg-stone-800/60 p-6 rounded-xl border border-stone-700/50">
+                    <h3 class="font-serif text-xl font-semibold text-amber-400 mb-2">原名與改名意涵</h3>
+                    <p class="searchable">
+                        倪柝聲原名<strong class="text-white">「倪述祖」</strong>，祖父倪玉成乃福州最早的基督徒之一。1920年，十七歲的倪述祖在聽聞余慈度師母傳福音後深刻悔改得救。後為回應神的呼召完全奉獻，他將名字改為<strong class="text-white">「柝聲」</strong>（英文：Watchman Nee），取意「守望者打更擊柝之聲」，立志成為黑暗時代中警醒教會、呼召世代悔改歸向神的守望者。
+                    </p>
+                </div>
+                <div class="bg-stone-800/60 p-6 rounded-xl border border-stone-700/50">
+                    <h3 class="font-serif text-xl font-semibold text-amber-400 mb-2">屬靈啟蒙：和受恩教士</h3>
+                    <p class="searchable">
+                        在屬靈生命的成形上，英國獨立女宣教士<strong class="text-white">和受恩（Margaret E. Barber）</strong>對倪柝聲產生了最深遠的影響。和受恩教士過著絕對敬虔、信靠神與十字架奉獻的生活，引導倪柝聲深讀屬靈經典書籍（如蓋恩夫人、賓路易師母作品），並奠定了他對「十字架做主」、「生命的破碎與成熟」等核心屬靈認識。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 屬靈年表歷史軸 (三分頁輪播) Timeline Section -->
+    <section id="timeline-sec" class="py-16 bg-stone-950 border-b border-stone-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="font-serif text-3xl font-bold text-amber-500 border-l-4 border-amber-500 pl-4">
+                    屬靈大事年表
+                </h2>
+                <!-- 分頁按鈕 -->
+                <div class="flex items-center space-x-3">
+                    <button id="tlPrev" class="p-2 bg-stone-800 hover:bg-amber-600 text-stone-300 hover:text-white rounded-lg transition-colors text-sm font-medium">上一頁</button>
+                    <span id="tlPageInfo" class="text-xs font-mono text-stone-400">1 / 6</span>
+                    <button id="tlNext" class="p-2 bg-stone-800 hover:bg-amber-600 text-stone-300 hover:text-white rounded-lg transition-colors text-sm font-medium">下一頁</button>
+                </div>
+            </div>
+
+            <!-- Timeline Items Container -->
+            <div id="timelineContainer" class="space-y-4"></div>
+        </div>
+    </section>
+
+    <!-- 代表著作 (三分頁輪播) Books Section -->
+    <section id="books-sec" class="py-16 bg-stone-900 border-b border-stone-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="font-serif text-3xl font-bold text-amber-500 border-l-4 border-amber-500 pl-4">
+                    代表著作簡介
+                </h2>
+                <div class="flex items-center space-x-3">
+                    <button id="bkPrev" class="p-2 bg-stone-800 hover:bg-amber-600 text-stone-300 hover:text-white rounded-lg transition-colors text-sm font-medium">上一頁</button>
+                    <span id="bkPageInfo" class="text-xs font-mono text-stone-400">1 / 6</span>
+                    <button id="bkNext" class="p-2 bg-stone-800 hover:bg-amber-600 text-stone-300 hover:text-white rounded-lg transition-colors text-sm font-medium">下一頁</button>
+                </div>
+            </div>
+
+            <!-- Books Grid Container -->
+            <div id="booksContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- 經典屬靈名言選輯 (三分頁輪播) Quotes Section -->
+    <section id="quotes-sec" class="py-16 bg-stone-950 border-b border-stone-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="font-serif text-3xl font-bold text-amber-500 border-l-4 border-amber-500 pl-4">
+                    經典屬靈名言選輯
+                </h2>
+                <div class="flex items-center space-x-3">
+                    <button id="qtPrev" class="p-2 bg-stone-800 hover:bg-amber-600 text-stone-300 hover:text-white rounded-lg transition-colors text-sm font-medium">上一頁</button>
+                    <span id="qtPageInfo" class="text-xs font-mono text-stone-400">1 / 6</span>
+                    <button id="qtNext" class="p-2 bg-stone-800 hover:bg-amber-600 text-stone-300 hover:text-white rounded-lg transition-colors text-sm font-medium">下一頁</button>
+                </div>
+            </div>
+
+            <!-- Quotes Container -->
+            <div id="quotesContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- 殉道見證與遺言 Martyrdom Section -->
+    <section class="py-16 bg-stone-900 border-b border-stone-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="bg-gradient-to-br from-stone-950 to-stone-900 border border-amber-900/40 p-8 rounded-2xl shadow-2xl relative">
+                <div class="text-amber-600 text-6xl font-serif absolute -top-4 left-6 opacity-30">“</div>
+                <h2 class="font-serif text-2xl font-bold text-amber-400 mb-4 relative z-10">最後的見證與遺言 (1972)</h2>
+                <p class="searchable text-stone-300 text-base sm:text-lg italic leading-relaxed mb-4 relative z-10">
+                    1952年倪柝聲被捕入獄，經歷長達20年的監禁與勞改。1972年6月1日，他在安徽廣德白茅嶺農場離世。在他病床枕頭下，人們發現了一張手寫的字條，上面寫著：
+                </p>
+                <div class="bg-stone-900/90 p-5 rounded-xl border border-stone-800 text-amber-200 font-serif text-lg sm:text-xl font-medium tracking-wide">
+                    「基督是神的兒子，為救贖罪人替死，三日復活，這是宇宙間最大的事實。我順服基督而死。——倪柝聲」
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡與表單串接 Section -->
+    <section id="contact" class="py-16 bg-stone-950">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8">
+                <h2 class="font-serif text-3xl font-bold text-amber-500">聯絡與詢問</h2>
+                <p class="text-stone-400 text-sm mt-2">若對屬靈書籍或內容有任何問題，歡迎填寫表單與我們聯繫。</p>
+            </div>
+
+            <form id="contactForm" class="bg-stone-900 border border-stone-800 rounded-2xl p-6 sm:p-8 space-y-4 shadow-xl">
+                <div>
+                    <label class="block text-xs font-medium text-stone-300 mb-1">姓名 <span class="text-rose-500">*</span></label>
+                    <input type="text" id="name" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-stone-300 mb-1">電子郵件 Email <span class="text-rose-500">*</span></label>
+                    <input type="email" id="email" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-stone-300 mb-1">聯絡電話</label>
+                    <input type="tel" id="phone" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-stone-300 mb-1">留言詢問事項</label>
+                    <textarea id="message" rows="4" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-medium py-3 rounded-lg transition-all shadow-lg hover:shadow-amber-900/30">
+                    送出資料
+                </button>
+
+                <div id="formStatus" class="hidden text-center text-xs p-3 rounded-lg font-medium"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-stone-900 border-t border-stone-800 py-8 text-center text-xs text-stone-500">
+        <div class="max-w-6xl mx-auto px-4">
+            <p>© 倪柝聲 (Watchman Nee) 一頁式紀念網頁 - 屬靈遺產專題展示</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 完整邏輯 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultGasUrl = 'https://script.google.com/macros/s/AKfycbxhjTRSt2AZLIJF5XSpOV_IcS6vGS__YRz2hiovwrXNUvC2YQTUT_jbybEoHsQojs4B/exec';
+            const defaultCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQT5vzfTnAcdtYKyqEB4dwJJJe3Q2NI9DqLKzm27Zp_S3vWCiiZZHVSRvoghKOhKRt_gxp9bWIYifrc/pub?output=csv';
+
+            /* ==========================================
+               1. 豐富資料庫 (年表 18 筆 / 著作 18 筆 / 名言 18 筆)
+               ========================================== */
+            const timelineData = [
+                { year: '1903', title: '出生於福州', desc: '原名倪述祖，祖籍浙江寧波，出生於基督教家庭。' },
+                { year: '1920', title: '得救與奉獻', desc: '聽聞余慈度師母傳福音深刻悔改，並立志改名「柝聲」，完全奉獻給主。' },
+                { year: '1922', title: '擘餅聚會起源', desc: '在福州與王載等同工開始回歸聖經的擘餅聚會，開啟地方教會運動。' },
+                { year: '1926', title: '出版《屬靈人》', desc: '於上海完成三冊屬靈巨著《屬靈人》，剖析靈、魂、體之區分與屬靈道路。' },
+                { year: '1928', title: '上海文德里聚會', desc: '在上海建立地方教會聚會處，發行《復興報》，出版許多核心屬靈信息。' },
+                { year: '1931', title: '訪問歐洲教會', desc: '應邀前往英國、法國等國訪問，與閉關弟兄會等屬靈團體交流。' },
+                { year: '1938', title: '出版《正常的基督徒生活》', desc: '在歐洲講道記錄整理成書，成為二十世紀全球最受歡迎的屬靈經典之一。' },
+                { year: '1942', title: '生生藥廠與服事', desc: '為資助全時間同工生活，出任生生藥廠董事長，後引發部分爭議與暫停服事。' },
+                { year: '1948', title: '鼓嶺執事訓練', desc: '在福州鼓嶺辦理同工訓練，興起大批年輕同工，教會運動達於高峰。' },
+                { year: '1949', title: '安排李常受前往台灣', desc: '前瞻性地安排李常受弟兄前往台灣繼續發揚地方教會工效。' },
+                { year: '1950', title: '香港最後服事', desc: '在香港帶領大復興聚會後，堅持返回中國大陸照顧弟兄姊妹。' },
+                { year: '1952', title: '被捕入獄', desc: '於上海被捕，隨後被判刑十五年，開始長達二十年的獄中生涯。' },
+                { year: '1956', title: '上海大審判', desc: '在審判中堅守信仰，被強加各項罪名，但內心始終與主聯合。' },
+                { year: '1967', title: '刑期屆滿未獲釋', desc: '雖十五年刑滿，但因拒絕放棄信仰而被繼續關押與移送勞改。' },
+                { year: '1970', title: '移送白茅嶺農場', desc: '轉移至安徽廣德白茅嶺農場進行勞改，身體極度衰弱但靈裡平安。' },
+                { year: '1972', title: '殉道安息', desc: '於6月1日安息主懷，枕頭下留下堅定信仰告白字條。' },
+                { year: '2009', title: '美國國會表彰', desc: '美國國會眾議院通過決議，讚揚其對全球基督教的貢獻。' },
+                { year: '2015', title: '百大基督徒評選', desc: '獲選為《今日基督教》雜誌影響二十世紀信仰的百大基督徒之一。' }
+            ];
+
+            const booksData = [
+                { title: '《屬靈人》', desc: '詳細解明靈、魂、體三部分的區別與屬靈生命成長的路徑。' },
+                { title: '《正常的基督徒生活》', desc: '解構羅馬書五至八章，闡述十字架與基督作為生命的經歷。' },
+                { title: '《坐、行、站》', desc: '以以弗所書為藍本，剖析基督徒在基督裡的地位與屬靈爭戰。' },
+                { title: '《權柄與順服》', desc: '闡明神宇宙中的權柄原則，以及信徒如何學會順服與代表權柄。' },
+                { title: '《人的破碎與靈的出來》', desc: '論述外表面層的破碎乃是屬靈生命與恩賜流露的關鍵。' },
+                { title: '《神的福音》', desc: '全面講解神救恩的合法手續、恩典與信徒的永生保障。' },
+                { title: '《教會的正統》', desc: '以啟示錄七個教會剖析教會歷史的演變與神的屬靈心意。' },
+                { title: '《亞伯拉罕以撒雅各的神》', desc: '藉由三祖表徵父神的揀選、子的享受與聖靈的管治。' },
+                { title: '《基督是我們的生命》', desc: '強調基督不單是救主，更是我們每日客觀與主觀的生命。' },
+                { title: '《屬靈的判定須知》', desc: '教導如何分辨出於肉體與靈的指引，提升屬靈洞察力。' },
+                { title: '《聖潔沒有瑕疵》', desc: '講解新婦教會在神眼中的美麗與完全預備。' },
+                { title: '《主工人性格》', desc: '論述主工人應具備的性格修養與屬靈操練。' },
+                { title: '《初信造就》', desc: '專為新得救信徒寫作的五十二題基礎屬靈餽糧。' },
+                { title: '《歌中的歌》', desc: '以雅歌註釋信徒與主之間愛的交通與生命追求經歷。' },
+                { title: '《祈禱與屬靈爭戰》', desc: '指導如何透過禱告配合神的旨意並擊退仇敵。' },
+                { title: '《福音問題》', desc: '針對救恩常見疑難解答五十題，建立清晰信仰根基。' },
+                { title: '《特會信息集》', desc: '收錄鼓嶺訓練及歷年全台特會的核心極深屬靈講章。' },
+                { title: '《倪柝聲文集》', desc: '共計六十二冊，完整收錄其一生所有的屬靈著述與專刊。' }
+            ];
+
+            const quotesData = [
+                { quote: '「神不在乎我們為祂做了多少工作，神在乎我們這個人到底給祂得著了多少。」' },
+                { quote: '「主啊！讚美祢，因為祢的旨意總是美好的，祢的道路總是最高超的。」' },
+                { quote: '「基督是我生命，十字架是我生活。」' },
+                { quote: '「所有的苦難都是神經營我們生命的工具，為要叫我們分享祂的聖潔。」' },
+                { quote: '「我們若不先在主面前『坐下』享受祂的成就，就絕不可能為祂『行走』或『站立』。」' },
+                { quote: '「沒有十字架的破碎，就沒有膏油的流露。」' },
+                { quote: '「生命的長進不在於知識的堆疊，乃在於對基督主觀認識的加深。」' },
+                { quote: '「真實的禱告不是改變神的旨意，乃是把神的旨意禱告到地上來。」' },
+                { quote: '「順服不是看對象是誰，順服乃是看見背後神的權柄。」' },
+                { quote: '「神的恩典不是給有辦法的人，乃是給承認自己毫無辦法的人。」' },
+                { quote: '「我們身上若沒有十字架的印記，就無法印證我們是主的門徒。」' },
+                { quote: '「主所看重的不是工作的果效，乃是工人愛祂的心。」' },
+                { quote: '「屬靈的豐盛是從屬靈的飢渴開始的。」' },
+                { quote: '「只要我們的心完全歸神，任何環境都能成為祝福。」' },
+                { quote: '「十字架的道路不是苦難的道路，乃是榮耀與生命的道路。」' },
+                { quote: '「信心的最高表現，就是在最黑暗的夜裡依然歌頌讚美。」' },
+                { quote: '「基督是神的兒子，為救贖罪人替死，三日復活，這是宇宙間最大的事實。」' },
+                { quote: '「不要怕神的管教，只怕我們在管教中失落了神的心意。」' }
+            ];
+
+            /* ==========================================
+               2. 三分頁動態輪播渲染引擎 (每頁 3 筆)
+               ========================================== */
+            let tlPage = 0, bkPage = 0, qtPage = 0;
+            const pageSize = 3;
+
+            function renderCarousel(data, containerId, page, pageInfoId, renderItemFn) {
+                const container = document.getElementById(containerId);
+                const pageInfo = document.getElementById(pageInfoId);
+                if (!container) return;
+
+                const totalPages = Math.ceil(data.length / pageSize) || 1;
+                const currentPage = Math.max(0, Math.min(page, totalPages - 1));
+                const start = currentPage * pageSize;
+                const end = start + pageSize;
+                const pageItems = data.slice(start, end);
+
+                container.innerHTML = pageItems.map(renderItemFn).join('');
+                if (pageInfo) pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
+            }
+
+            function renderTimeline() {
+                renderCarousel(timelineData, 'timelineContainer', tlPage, 'tlPageInfo', item => `
+                    <div class="bg-stone-900 border border-stone-800 rounded-xl p-5 hover:border-amber-700/50 transition-all flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-6">
+                        <span class="font-mono text-2xl font-bold text-amber-500 min-w-[80px]">${item.year}</span>
+                        <div>
+                            <h3 class="font-serif text-lg font-bold text-stone-100 searchable">${item.title}</h3>
+                            <p class="text-stone-400 text-sm mt-1 searchable">${item.desc}</p>
+                        </div>
+                    </div>
+                `);
+            }
+
+            function renderBooks() {
+                renderCarousel(booksData, 'booksContainer', bkPage, 'bkPageInfo', item => `
+                    <div class="bg-stone-950 border border-stone-800 rounded-xl p-6 hover:border-amber-600/50 transition-all flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-mono text-amber-500 bg-amber-950/60 px-2 py-0.5 rounded">代表作</span>
+                            <h3 class="font-serif text-xl font-bold text-amber-400 mt-3 searchable">${item.title}</h3>
+                            <p class="text-stone-400 text-sm mt-2 leading-relaxed searchable">${item.desc}</p>
+                        </div>
+                    </div>
+                `);
+            }
+
+            function renderQuotes() {
+                renderCarousel(quotesData, 'quotesContainer', qtPage, 'qtPageInfo', item => `
+                    <div class="bg-stone-900 border border-stone-800 rounded-xl p-6 hover:border-amber-600/50 transition-all flex flex-col justify-between">
+                        <blockquote class="font-serif text-stone-200 text-base italic leading-relaxed border-l-2 border-amber-500 pl-4 searchable">
+                            ${item.quote}
+                        </blockquote>
+                        <div class="mt-4 text-right">
+                            <span class="text-xs text-amber-500 font-mono">— 倪柝聲</span>
+                        </div>
+                    </div>
+                `);
+            }
+
+            // 初始化渲染
+            renderTimeline();
+            renderBooks();
+            renderQuotes();
+
+            // 分頁按鈕事件
+            document.getElementById('tlPrev')?.addEventListener('click', () => { if (tlPage > 0) { tlPage--; renderTimeline(); } });
+            document.getElementById('tlNext')?.addEventListener('click', () => { if ((tlPage + 1) * pageSize < timelineData.length) { tlPage++; renderTimeline(); } });
+
+            document.getElementById('bkPrev')?.addEventListener('click', () => { if (bkPage > 0) { bkPage--; renderBooks(); } });
+            document.getElementById('bkNext')?.addEventListener('click', () => { if ((bkPage + 1) * pageSize < booksData.length) { bkPage++; renderBooks(); } });
+
+            document.getElementById('qtPrev')?.addEventListener('click', () => { if (qtPage > 0) { qtPage--; renderQuotes(); } });
+            document.getElementById('qtNext')?.addEventListener('click', () => { if ((qtPage + 1) * pageSize < quotesData.length) { qtPage++; renderQuotes(); } });
+
+            /* ==========================================
+               3. 屬靈心靈補給站 (互動推薦)
+               ========================================== */
+            const recommendMap = {
+                'trough': {
+                    bookTitle: '《坐、行、站》',
+                    bookDesc: '當你感到迷惘低谷時，首先學習在基督裡「坐下」安息，享受祂已經成就的得勝，而不是靠自己掙扎。',
+                    quote: '「我們若不先在主面前『坐下』享受祂的成就，就絕不可能為祂『行走』或『站立』。」'
+                },
+                'growth': {
+                    bookTitle: '《屬靈人》',
+                    bookDesc: '渴慕生命長進時，這本書能指引你分辨心思、情感與靈的開展，走向更深的屬靈豐盛。',
+                    quote: '「神不在乎我們為祂做了多少工作，神在乎我們這個人到底給祂得著了多少。」'
+                },
+                'decision': {
+                    bookTitle: '《權柄與順服》',
+                    bookDesc: '面臨抉擇時，學習放下個人的主張，看見神的宇宙權柄與指引，心思便得著釋放與平安。',
+                    quote: '「順服不是看對象是誰，順服乃是看見背後神的權柄。」'
+                },
+                'trial': {
+                    bookTitle: '《人的破碎與靈的出來》',
+                    bookDesc: '環境的苦難與試煉乃是神聖的手在拆毀外在的堅固營壘，好讓內在生命的膏油得以流露。',
+                    quote: '「所有的苦難都是神經營我們生命的工具，為要叫我們分享祂的聖潔。」'
+                },
+                'service': {
+                    bookTitle: '《正常的基督徒生活》',
+                    bookDesc: '服事疲憊時回到羅馬書，經歷不單是我們為主工作，乃是基督在我們裡面活出祂的生命。',
+                    quote: '「基督是我生命，十字架是我生活。」'
+                }
+            };
+
+            document.getElementById('recommendBtn')?.addEventListener('click', () => {
+                const situation = document.getElementById('situationSelect').value;
+                const res = recommendMap[situation] || recommendMap['trough'];
+
+                document.getElementById('recBookTitle').textContent = res.bookTitle;
+                document.getElementById('recBookDesc').textContent = res.bookDesc;
+                document.getElementById('recQuote').textContent = res.quote;
+                document.getElementById('recommendResult').classList.remove('hidden');
+            });
+
+            /* ==========================================
+               4. 全站即時搜尋與高亮引擎
+               ========================================== */
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            const searchStats = document.getElementById('searchStats');
+
+            function performSearch() {
+                const query = searchInput.value.trim().toLowerCase();
+                if (!query) {
+                    clearSearchBtn.classList.add('hidden');
+                    searchStats.textContent = '';
+                    removeHighlights();
+                    return;
+                }
+
+                clearSearchBtn.classList.remove('hidden');
+
+                // 搜尋年表、著作與名言並自動切換到目標頁面
+                const tlMatchIdx = timelineData.findIndex(item => item.title.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query));
+                if (tlMatchIdx !== -1) { tlPage = Math.floor(tlMatchIdx / pageSize); renderTimeline(); }
+
+                const bkMatchIdx = booksData.findIndex(item => item.title.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query));
+                if (bkMatchIdx !== -1) { bkPage = Math.floor(bkMatchIdx / pageSize); renderBooks(); }
+
+                const qtMatchIdx = quotesData.findIndex(item => item.quote.toLowerCase().includes(query));
+                if (qtMatchIdx !== -1) { qtPage = Math.floor(qtMatchIdx / pageSize); renderQuotes(); }
+
+                // 內文高亮標籤處理
+                let matchCount = 0;
+                const targets = document.querySelectorAll('.searchable');
+
+                targets.forEach(el => {
+                    const originalText = el.getAttribute('data-original') || el.innerText;
+                    if (!el.getAttribute('data-original')) el.setAttribute('data-original', originalText);
+
+                    if (originalText.toLowerCase().includes(query)) {
+                        const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+                        el.innerHTML = originalText.replace(regex, '<mark class="highlight">$1</mark>');
+                        matchCount++;
+                    } else {
+                        el.innerText = originalText;
+                    }
+                });
+
+                searchStats.textContent = `找到 ${matchCount} 處相符文字`;
+            }
+
+            function escapeRegExp(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            function removeHighlights() {
+                document.querySelectorAll('.searchable').forEach(el => {
+                    const originalText = el.getAttribute('data-original');
+                    if (originalText) el.innerText = originalText;
+                });
+            }
+
+            searchInput?.addEventListener('input', performSearch);
+            clearSearchBtn?.addEventListener('click', () => {
+                searchInput.value = '';
+                performSearch();
+            });
+
+            /* ==========================================
+               5. 數字時鐘與背景 CSV 輪播
+               ========================================== */
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                const clockTime = document.getElementById('clockTime');
+                if (clockTime) clockTime.textContent = `${hours}:${minutes}:${seconds}`;
+
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const date = String(now.getDate()).padStart(2, '0');
+                const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                const dayName = days[now.getDay()];
+
+                const clockDate = document.getElementById('clockDate');
+                if (clockDate) clockDate.textContent = `${year} 年 ${month} 月 ${date} 日 ${dayName}`;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // 照片輪播邏輯
+            let wallpaperList = [];
+            let currentImageIndex = 0;
+            let carouselIntervalTimer = null;
+            let carouselDuration = 30000;
+
+            function loadCsvWallpapers(url) {
+                fetch(url)
+                    .then(res => res.text())
+                    .then(csvText => {
+                        const lines = csvText.split(/\r?\n/);
+                        const urls = [];
+                        lines.forEach(line => {
+                            const trimmed = line.trim();
+                            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+                                urls.push(trimmed);
+                            }
+                        });
+
+                        if (urls.length > 0) {
+                            wallpaperList = urls;
+                            changeWallpaper(0);
+                            startCarousel();
+                        }
+                    })
+                    .catch(err => console.error('CSV 載入失敗:', err));
+            }
+
+            function changeWallpaper(index) {
+                if (wallpaperList.length === 0) return;
+                currentImageIndex = index % wallpaperList.length;
+                const heroBg = document.getElementById('heroBg');
+                const photoCaption = document.getElementById('photoCaption');
+                if (heroBg) heroBg.style.backgroundImage = `url('${wallpaperList[currentImageIndex]}')`;
+                if (photoCaption) photoCaption.textContent = `相片 ${currentImageIndex + 1} / ${wallpaperList.length}`;
+            }
+
+            function startCarousel() {
+                if (carouselIntervalTimer) clearInterval(carouselIntervalTimer);
+                carouselIntervalTimer = setInterval(() => {
+                    if (wallpaperList.length > 0) {
+                        changeWallpaper(currentImageIndex + 1);
+                    }
+                }, carouselDuration);
+            }
+
+            loadCsvWallpapers(defaultCsvUrl);
+
+            // 齒輪與選單控制
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+            const intervalSelect = document.getElementById('intervalSelect');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            settingsBtn?.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+            closeSettingsBtn?.addEventListener('click', () => {
+                carouselDuration = parseInt(intervalSelect.value, 10);
+                startCarousel();
+                settingsModal.classList.add('hidden');
+            });
+
+            mobileMenuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+            /* ==========================================
+               6. 表單提交處理 (GAS 串接)
+               ========================================== */
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formStatus = document.getElementById('formStatus');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const message = document.getElementById('message').value.trim();
+
+                    if (!name || !email) {
+                        showFormStatus('請填寫必填欄位 (姓名與 Email)', false);
+                        return;
+                    }
+
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = '資料傳送中...';
+                    formStatus.classList.add('hidden');
+
+                    const formData = new URLSearchParams();
+                    formData.append('name', name);
+                    formData.append('email', email);
+                    formData.append('phone', phone);
+                    formData.append('message', message);
+
+                    fetch(defaultGasUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    })
+                    .then(() => {
+                        showFormStatus('感謝您的留訊！我們已收到您的資料，將會儘快與您聯繫。', true);
+                        contactForm.reset();
+                    })
+                    .catch(error => {
+                        console.error('Form Error:', error);
+                        showFormStatus('傳送資料時發生錯誤，請稍後再試。', false);
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = '送出資料';
+                    });
+                });
+            }
+
+            function showFormStatus(msg, isSuccess) {
+                if (!formStatus) return;
+                formStatus.textContent = msg;
+                formStatus.classList.remove('hidden', 'bg-emerald-800/80', 'text-emerald-200', 'bg-rose-800/80', 'text-rose-200');
+                if (isSuccess) {
+                    formStatus.classList.add('bg-emerald-800/80', 'text-emerald-200');
+                } else {
+                    formStatus.classList.add('bg-rose-800/80', 'text-rose-200');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
