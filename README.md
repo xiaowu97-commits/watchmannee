@@ -2,10 +2,13 @@
 
 > 專為行動端打造的高質感網頁作品集，收錄一頁式文化紀念網頁、沉浸式計時工具、動態桌布與結構化研究圖表。
 
+[![Live Demo](https://img.shields.io/badge/Demo-GitHub%20Pages-brightgreen?style=flat-square&logo=github)](https://xiaowu97-commits.github.io/watchmannee/)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+
+🌐 **線上展示網址 (Live Website)**：[https://xiaowu97-commits.github.io/watchmannee/](https://xiaowu97-commits.github.io/watchmannee/)
 
 ---
 
